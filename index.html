@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Journey to Your Dreams</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #87CEEB; /* Sky blue */
+            overflow-x: hidden;
+        }
+
+        /* The Road */
+        #road {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 350vh;
+            background-color: #333;
+            border-left: 5px dashed white;
+            border-right: 5px dashed white;
+            z-index: 1;
+        }
+
+        /* The Moving Car */
+        #car {
+            position: fixed;
+            left: 50%;
+            bottom: 50px;
+            transform: translateX(-50%);
+            font-size: 50px;
+            z-index: 10;
+            transition: transform 0.2s ease-out;
+        }
+
+        /* Sections (Levels) */
+        .stage {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            text-align: center;
+            pointer-events: none; /* Let clicks pass through to specific items */
+        }
+
+        .stage-content {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            pointer-events: auto; /* Enable clicks inside cards */
+            transform: translateX(-200px); /* Offset from road */
+        }
+
+        .stage-content h2 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        /* Specific Stages Backgrounds (Optional: Add actual images in CSS) */
+        #level-1 { background: linear-gradient(to bottom, #a8e063, #56ab2f); }
+        #level-2 { background: linear-gradient(to bottom, #f1c40f, #e67e22); }
+        #level-3 { background: linear-gradient(to bottom, #bdc3c7, #2c3e50); color: white; }
+
+        /* Interactive Elements */
+        .interactive-btn {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+
+        .interactive-btn:hover {
+            transform: scale(1.1);
+            background: #ff6b81;
+        }
+
+        #food-message {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #d35400;
+            min-height: 24px;
+        }
+
+        #dream-house {
+            font-size: 80px;
+            cursor: pointer;
+            transition: 0.3s;
+            pointer-events: auto;
+            margin-top: 20px;
+        }
+
+        #dream-house:hover {
+            transform: scale(1.1);
+        }
+
+        /* Birthday Modal */
+        #birthday-modal {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.5s ease;
+        }
+
+        #birthday-modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+            transform: scale(0.7);
+            transition: 0.5s ease;
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+        }
+
+        #birthday-modal.show .modal-card {
+            transform: scale(1);
+        }
+
+        .modal-card h1 {
+            color: #e84118;
+            font-size: 35px;
+            margin-bottom: 20px;
+        }
+
+        .modal-card p {
+            font-size: 18px;
+            color: #353b48;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="road"></div>
+    <div id="car">🚗</div>
+
+    <!-- Level 1: The Start -->
+    <div class="stage" id="level-1">
+        <div class="stage-content" style="transform: translateX(-150px);">
+            <h2>📍 Starting from Srinagar</h2>
+            <p>Seatbelt baandh lo, sapnon ka safar shuru ho raha hai!</p>
+            <p style="font-size: 12px; margin-top: 10px; color: gray;">(Scroll Down ⬇️)</p>
+        </div>
+    </div>
+
+    <!-- Level 2: Food Stop -->
+    <div class="stage" id="level-2">
+        <div class="stage-content" style="transform: translateX(150px);">
+            <h2>🍔 The Food Heaven</h2>
+            <p>Lamba safar hai, thoda kha lena chahiye!</p>
+            <button class="interactive-btn" onclick="eatFood()">Grab a Bite!</button>
+            <div id="food-message"></div>
+        </div>
+    </div>
+
+    <!-- Level 3: The Destination -->
+    <div class="stage" id="level-3">
+        <div class="stage-content" style="transform: translateX(0); background: rgba(0,0,0,0.6); color: white;">
+            <h2>🏔️ Welcome to Ladakh!</h2>
+            <p>Tumhara dream house samne hai. Darwaza knock karo!</p>
+            <div id="dream-house" onclick="openDoor()">🚪</div>
+            <p style="font-size: 14px; margin-top: 10px;">Click the door to open</p>
+        </div>
+    </div>
+
+    <!-- The Birthday Modal / Letter -->
+    <div id="birthday-modal">
+        <div class="modal-card">
+            <h1>🎂 Happy Birthday! 🎂</h1>
+            <div style="font-size: 50px; margin-bottom: 20px;">🏡✨</div>
+            <p>Yeh raha tumhara Ladakh ka dream house! Yahan ka view bhi perfect hai aur kitchen tumhare favorite khane se bhara hai.</p>
+            <br>
+            <p><strong>Message:</strong> [Yahan apna pyara sa personalized letter likho, unki aur apni yaadein share karo]</p>
+            <br>
+            <button class="interactive-btn" onclick="closeDoor()">Close Letter</button>
+        </div>
+    </div>
+
+    <script>
+        // Car Scroll Animation
+        window.addEventListener("scroll", () => {
+            let scrollY = window.scrollY;
+            let car = document.getElementById("car");
+            
+            // Add a slight wobble effect to the car while scrolling down
+            let wobble = Math.sin(scrollY * 0.05) * 5; 
+            car.style.transform = `translateX(-50%) rotate(${wobble}deg)`;
+        });
+
+        // Food Stop Logic
+        const foods = ["Pizza 🍕", "Burger 🍔", "Momos 🥟", "Biryani 🍲", "Ice Cream 🍦"];
+        function eatFood() {
+            let randomFood = foods[Math.floor(Math.random() * foods.length)];
+            let messageBox = document.getElementById("food-message");
+            messageBox.innerHTML = `Yum! Energy restored to 100% with ${randomFood}! 😋`;
+        }
+
+        // Door / Birthday Modal Logic
+        function openDoor() {
+            let house = document.getElementById("dream-house");
+            house.innerHTML = "🎉"; // Changes door to confetti when clicked
+            
+            setTimeout(() => {
+                document.getElementById("birthday-modal").classList.add("show");
+            }, 300); // Slight delay for the pop-up
+        }
+
+        function closeDoor() {
+            document.getElementById("birthday-modal").classList.remove("show");
+            document.getElementById("dream-house").innerHTML = "🚪";
+        }
+    </script>
+
+</body>
+</html>
