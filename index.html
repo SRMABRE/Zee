@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Journey to Your Dreams</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+    <title>Your Dream Journey</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -15,35 +18,82 @@
         }
 
         body {
-            background-color: #87CEEB; /* Sky blue */
+            background-color: #111;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
-        /* The Road */
+        /* 1. Start Screen (To unlock Audio) */
+        #start-screen {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            color: white;
+            transition: opacity 1s ease;
+        }
+        
+        .start-btn {
+            background: linear-gradient(45deg, #ff6b81, #ff4757);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 22px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(255, 71, 87, 0.4);
+            transition: 0.3s;
+            margin-top: 20px;
+        }
+
+        .start-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 25px rgba(255, 71, 87, 0.6);
+        }
+
+        /* 2. The Road & Car */
         #road {
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            width: 150px;
-            height: 350vh;
-            background-color: #333;
-            border-left: 5px dashed white;
-            border-right: 5px dashed white;
-            z-index: 1;
+            width: 120px;
+            height: 300vh;
+            background: #2f3640;
+            border-left: 6px solid white;
+            border-right: 6px solid white;
+            z-index: 5;
         }
 
-        /* The Moving Car */
+        /* Dashed center line of the road */
+        #road::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 100%;
+            background-image: linear-gradient(to bottom, #fbc531 50%, transparent 50%);
+            background-size: 100% 80px;
+        }
+
         #car {
             position: fixed;
             left: 50%;
-            bottom: 50px;
+            bottom: 80px;
             transform: translateX(-50%);
-            font-size: 50px;
+            width: 70px; /* Perfect for tablet */
             z-index: 10;
-            transition: transform 0.2s ease-out;
+            transition: transform 0.1s ease-out;
+            filter: drop-shadow(0 15px 10px rgba(0,0,0,0.5));
         }
 
-        /* Sections (Levels) */
+        /* 3. Parallax Stages */
         .stage {
             position: relative;
             width: 100vw;
@@ -52,196 +102,293 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 2;
+            z-index: 6;
             text-align: center;
-            pointer-events: none; /* Let clicks pass through to specific items */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Creates the 3D scroll effect */
+            pointer-events: none;
         }
 
+        /* HD Background Images from Unsplash */
+        #level-1 { 
+            background-image: url('https://images.unsplash.com/photo-1595815771614-ade9d652a65d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); 
+        }
+        #level-2 { 
+            background-image: url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); 
+        }
+        #level-3 { 
+            background-image: url('https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); 
+        }
+
+        /* Glassmorphism Cards */
         .stage-content {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 20px 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            pointer-events: auto; /* Enable clicks inside cards */
-            transform: translateX(-200px); /* Offset from road */
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); /* For iPad Safari */
+            padding: 30px 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            pointer-events: auto;
+            max-width: 400px;
+            border: 1px solid rgba(255,255,255,0.5);
         }
 
-        .stage-content h2 {
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
+        /* Responsive placement for Tablet */
+        .stage:nth-child(2) .stage-content { transform: translateX(-220px); }
+        .stage:nth-child(3) .stage-content { transform: translateX(220px); }
+        .stage:nth-child(4) .stage-content { transform: translateX(0); background: rgba(0,0,0,0.7); color: white; border: 1px solid #555; }
 
-        /* Specific Stages Backgrounds (Optional: Add actual images in CSS) */
-        #level-1 { background: linear-gradient(to bottom, #a8e063, #56ab2f); }
-        #level-2 { background: linear-gradient(to bottom, #f1c40f, #e67e22); }
-        #level-3 { background: linear-gradient(to bottom, #bdc3c7, #2c3e50); color: white; }
+        .stage-content h2 { color: #2f3542; font-size: 28px; margin-bottom: 10px; }
+        .stage:nth-child(4) .stage-content h2 { color: #fbc531; }
 
         /* Interactive Elements */
         .interactive-btn {
-            background: #ff4757;
+            background: #2ed573;
             color: white;
             border: none;
-            padding: 10px 20px;
-            font-size: 16px;
+            padding: 12px 25px;
+            font-size: 18px;
+            font-weight: 600;
             border-radius: 50px;
             cursor: pointer;
             margin-top: 15px;
             transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(46, 213, 115, 0.4);
         }
 
-        .interactive-btn:hover {
-            transform: scale(1.1);
-            background: #ff6b81;
-        }
+        .interactive-btn:hover { background: #26de81; transform: scale(1.05); }
 
         #food-message {
-            margin-top: 10px;
-            font-weight: bold;
-            color: #d35400;
-            min-height: 24px;
+            margin-top: 15px;
+            font-weight: 800;
+            font-size: 18px;
+            color: #ff4757;
+            min-height: 28px;
         }
 
-        #dream-house {
-            font-size: 80px;
+        /* The Door Button */
+        #dream-house-door {
+            width: 100px;
             cursor: pointer;
-            transition: 0.3s;
-            pointer-events: auto;
             margin-top: 20px;
+            transition: 0.3s ease;
+            pointer-events: auto;
+            filter: drop-shadow(0 0 10px rgba(255,215,0,0.5));
         }
+        
+        #dream-house-door:hover { transform: scale(1.1); filter: drop-shadow(0 0 20px rgba(255,215,0,0.9)); }
 
-        #dream-house:hover {
-            transform: scale(1.1);
-        }
-
-        /* Birthday Modal */
+        /* 4. Birthday Modal */
         #birthday-modal {
             position: fixed;
             top: 0; left: 0;
             width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.85);
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 100;
+            z-index: 200;
             opacity: 0;
             visibility: hidden;
             transition: 0.5s ease;
         }
 
-        #birthday-modal.show {
-            opacity: 1;
-            visibility: visible;
-        }
+        #birthday-modal.show { opacity: 1; visibility: visible; }
 
         .modal-card {
             background: white;
-            padding: 40px;
-            border-radius: 20px;
+            padding: 50px;
+            border-radius: 25px;
             text-align: center;
-            max-width: 500px;
+            max-width: 600px;
+            width: 90%;
             transform: scale(0.7);
-            transition: 0.5s ease;
-            box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 60px rgba(255, 215, 0, 0.4);
         }
 
-        #birthday-modal.show .modal-card {
-            transform: scale(1);
-        }
+        #birthday-modal.show .modal-card { transform: scale(1); }
 
-        .modal-card h1 {
-            color: #e84118;
-            font-size: 35px;
-            margin-bottom: 20px;
-        }
-
-        .modal-card p {
-            font-size: 18px;
-            color: #353b48;
-            line-height: 1.6;
+        .modal-card h1 { color: #ff4757; font-size: 40px; margin-bottom: 20px; font-weight: 800; }
+        .modal-card p { font-size: 20px; color: #2f3542; line-height: 1.8; margin-bottom: 15px; }
+        
+        .close-btn { background: #57606f; margin-top: 20px; }
+        
+        /* Media Query for smaller tablets/phones */
+        @media (max-width: 768px) {
+            .stage:nth-child(2) .stage-content, .stage:nth-child(3) .stage-content { transform: translateX(0); margin-left: 20px; margin-right: 20px; }
+            #road { left: 10%; }
+            #car { left: 10%; }
         }
     </style>
 </head>
 <body>
 
-    <div id="road"></div>
-    <div id="car">🚗</div>
+    <audio id="engineSound" src="https://actions.google.com/sounds/v1/transportation/car_engine_start.ogg"></audio>
+    <audio id="drivingSound" src="https://actions.google.com/sounds/v1/transportation/car_driving_slowly.ogg" loop></audio>
+    <audio id="eatSound" src="https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg"></audio>
+    <audio id="knockSound" src="https://actions.google.com/sounds/v1/foley/door_knock.ogg"></audio>
+    <audio id="magicSound" src="https://actions.google.com/sounds/v1/cartoon/magic_chime.ogg"></audio>
 
-    <!-- Level 1: The Start -->
+    <div id="start-screen">
+        <h1 style="font-size: 40px; margin-bottom: 10px; text-align: center;">Ready for the Trip?</h1>
+        <p>Turn up the volume! 🔊</p>
+        <button class="start-btn" onclick="startJourney()">Start Engine 🔑</button>
+    </div>
+
+    <div id="road"></div>
+    
+    <img id="car" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Car_top_view.svg/512px-Car_top_view.svg.png" alt="Car">
+
     <div class="stage" id="level-1">
-        <div class="stage-content" style="transform: translateX(-150px);">
-            <h2>📍 Starting from Srinagar</h2>
-            <p>Seatbelt baandh lo, sapnon ka safar shuru ho raha hai!</p>
-            <p style="font-size: 12px; margin-top: 10px; color: gray;">(Scroll Down ⬇️)</p>
+        <div class="stage-content">
+            <h2>📍 Srinagar</h2>
+            <p>Safar shuru ho raha hai tumhare shehar se. Seatbelt baandh lo!</p>
+            <p style="font-size: 14px; margin-top: 15px; color: #747d8c;">(Scroll Down ⬇️)</p>
         </div>
     </div>
 
-    <!-- Level 2: Food Stop -->
     <div class="stage" id="level-2">
-        <div class="stage-content" style="transform: translateX(150px);">
-            <h2>🍔 The Food Heaven</h2>
-            <p>Lamba safar hai, thoda kha lena chahiye!</p>
-            <button class="interactive-btn" onclick="eatFood()">Grab a Bite!</button>
+        <div class="stage-content">
+            <h2>☕ The Cafe Stop</h2>
+            <p>Pahaadon ka lamba safar hai, tumhara favorite khana taiyar hai!</p>
+            <button class="interactive-btn" onclick="eatFood()">Grab a Bite 🍕</button>
             <div id="food-message"></div>
         </div>
     </div>
 
-    <!-- Level 3: The Destination -->
     <div class="stage" id="level-3">
-        <div class="stage-content" style="transform: translateX(0); background: rgba(0,0,0,0.6); color: white;">
+        <div class="stage-content">
             <h2>🏔️ Welcome to Ladakh!</h2>
-            <p>Tumhara dream house samne hai. Darwaza knock karo!</p>
-            <div id="dream-house" onclick="openDoor()">🚪</div>
-            <p style="font-size: 14px; margin-top: 10px;">Click the door to open</p>
+            <p>Sapnon ka ghar samne hai. Darwaze par knock karo!</p>
+            <img id="dream-house-door" src="https://cdn-icons-png.flaticon.com/512/3030/3030104.png" alt="Door" onclick="openDoor()">
+            <p style="font-size: 14px; margin-top: 10px; color: #ccc;">Click the door to knock</p>
         </div>
     </div>
 
-    <!-- The Birthday Modal / Letter -->
     <div id="birthday-modal">
         <div class="modal-card">
             <h1>🎂 Happy Birthday! 🎂</h1>
-            <div style="font-size: 50px; margin-bottom: 20px;">🏡✨</div>
-            <p>Yeh raha tumhara Ladakh ka dream house! Yahan ka view bhi perfect hai aur kitchen tumhare favorite khane se bhara hai.</p>
-            <br>
-            <p><strong>Message:</strong> [Yahan apna pyara sa personalized letter likho, unki aur apni yaadein share karo]</p>
-            <br>
-            <button class="interactive-btn" onclick="closeDoor()">Close Letter</button>
+            <img src="https://cdn-icons-png.flaticon.com/512/619/619043.png" width="100" style="margin-bottom: 20px;" alt="House">
+            <p><strong>To My Favorite Person,</strong></p>
+            <p>Yeh raha tumhara Ladakh ka Dream House! 🏡 Pahaadon ke beech, jahan tum apni marzi se ghoom sakti ho, aur kitchen mein tumhara saara pasandida khana bhara hua hai.</p>
+            <p><em>[Yahan tumhara lamba, pyara sa personalized letter aayega. Apni aur unki yaadein likho...]</em></p>
+            <button class="interactive-btn close-btn" onclick="closeDoor()">Keep Dreaming ✨</button>
         </div>
     </div>
 
     <script>
-        // Car Scroll Animation
-        window.addEventListener("scroll", () => {
-            let scrollY = window.scrollY;
-            let car = document.getElementById("car");
-            
-            // Add a slight wobble effect to the car while scrolling down
-            let wobble = Math.sin(scrollY * 0.05) * 5; 
-            car.style.transform = `translateX(-50%) rotate(${wobble}deg)`;
-        });
+        const car = document.getElementById("car");
+        const engineSound = document.getElementById("engineSound");
+        const drivingSound = document.getElementById("drivingSound");
+        const eatSound = document.getElementById("eatSound");
+        const knockSound = document.getElementById("knockSound");
+        const magicSound = document.getElementById("magicSound");
 
-        // Food Stop Logic
-        const foods = ["Pizza 🍕", "Burger 🍔", "Momos 🥟", "Biryani 🍲", "Ice Cream 🍦"];
-        function eatFood() {
-            let randomFood = foods[Math.floor(Math.random() * foods.length)];
-            let messageBox = document.getElementById("food-message");
-            messageBox.innerHTML = `Yum! Energy restored to 100% with ${randomFood}! 😋`;
+        let isDriving = false;
+        let scrollTimeout;
+
+        // 1. Start Engine Logic
+        function startJourney() {
+            let startScreen = document.getElementById("start-screen");
+            engineSound.play();
+            
+            startScreen.style.opacity = "0";
+            setTimeout(() => {
+                startScreen.style.display = "none";
+                document.body.style.overflowY = "auto"; // Allow scrolling now
+            }, 1000);
         }
 
-        // Door / Birthday Modal Logic
-        function openDoor() {
-            let house = document.getElementById("dream-house");
-            house.innerHTML = "🎉"; // Changes door to confetti when clicked
+        // Disable scroll initially until button is clicked
+        document.body.style.overflowY = "hidden";
+
+        // 2. Advanced Car Scroll Animation & Audio
+        window.addEventListener("scroll", () => {
+            let scrollY = window.scrollY;
             
+            // Wobble effect for realism
+            let wobble = Math.sin(scrollY * 0.03) * 3; 
+            car.style.transform = `translateX(-50%) rotate(${wobble}deg)`;
+
+            // Manage Driving Sound
+            if (!isDriving && scrollY > 10) {
+                drivingSound.play();
+                isDriving = true;
+            }
+
+            // Pause sound when scrolling stops
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                drivingSound.pause();
+                isDriving = false;
+            }, 300);
+        });
+
+        // 3. Food Stop Logic with Sound
+        const foods = ["Pizza 🍕", "Burger 🍔", "Momos 🥟", "Biryani 🍲", "Cold Coffee 🧋"];
+        function eatFood() {
+            eatSound.play();
+            let randomFood = foods[Math.floor(Math.random() * foods.length)];
+            let messageBox = document.getElementById("food-message");
+            
+            // CSS Animation for text pop
+            messageBox.style.transform = "scale(0)";
             setTimeout(() => {
+                messageBox.innerHTML = `Yum! 100% Energy with ${randomFood}!`;
+                messageBox.style.transform = "scale(1)";
+                messageBox.style.transition = "transform 0.3s ease-out";
+            }, 100);
+        }
+
+        // 4. Knocking & Birthday Modal Logic with Confetti
+        function openDoor() {
+            knockSound.play();
+            
+            // Shake the door image
+            let door = document.getElementById("dream-house-door");
+            door.style.transform = "rotate(10deg)";
+            setTimeout(() => door.style.transform = "rotate(-10deg)", 100);
+            setTimeout(() => door.style.transform = "rotate(0deg)", 200);
+
+            // Wait for knock sound to finish, then show magic
+            setTimeout(() => {
+                drivingSound.pause(); // Ensure driving sound stops
+                magicSound.play();
+                
+                // Trigger Canvas Confetti
+                var duration = 3 * 1000;
+                var end = Date.now() + duration;
+
+                (function frame() {
+                    confetti({
+                        particleCount: 5,
+                        angle: 60,
+                        spread: 55,
+                        origin: { x: 0 },
+                        colors: ['#ff4757', '#2ed573', '#fbc531']
+                    });
+                    confetti({
+                        particleCount: 5,
+                        angle: 120,
+                        spread: 55,
+                        origin: { x: 1 },
+                        colors: ['#ff4757', '#2ed573', '#fbc531']
+                    });
+
+                    if (Date.now() < end) {
+                        requestAnimationFrame(frame);
+                    }
+                }());
+
                 document.getElementById("birthday-modal").classList.add("show");
-            }, 300); // Slight delay for the pop-up
+            }, 1200); 
         }
 
         function closeDoor() {
             document.getElementById("birthday-modal").classList.remove("show");
-            document.getElementById("dream-house").innerHTML = "🚪";
         }
     </script>
-
 </body>
 </html>
