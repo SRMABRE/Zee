@@ -2,369 +2,615 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Ultimate Ladakh Dream</title>
-    
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Ultimate Roadtrip to Your Dreams | Ladakh Odyssey</title>
+
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Poppins:wght@300;400;600;800&family=Sacramento&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Confetti JS -->
+
+    <!-- External Audio & Confetti Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        :root {
+            --primary-accent: #ff4757;
+            --secondary-accent: #2ed573;
+            --gold-glow: #fbc531;
+            --dark-glass: rgba(18, 18, 18, 0.75);
+            --light-glass: rgba(255, 255, 255, 0.85);
+            --hud-border: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
         body {
-            font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(to bottom, #87CEEB 0%, #ff9ff3 50%, #2c3e50 100%);
+            background-color: #0d0d11;
+            color: #fff;
             overflow-x: hidden;
             scroll-behavior: smooth;
-            cursor: crosshair; /* Custom cursor */
         }
 
-        /* 1. Preloader */
-        #preloader {
-            position: fixed; width: 100vw; height: 100vh;
-            background: #111; z-index: 9999;
+        /* 1. START ENGINE OVERLAY SCREEN */
+        #start-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(135deg, #09090e 0%, #1a1c29 100%);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            color: white; transition: 1s ease-out;
+            z-index: 9999;
+            text-align: center;
+            padding: 20px;
+            transition: opacity 1s ease, visibility 1s ease;
         }
-        .loader { border: 5px solid #333; border-top: 5px solid #ff4757; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* 2. Progress Bar */
-        #progress-container {
-            position: fixed; top: 0; left: 0; width: 100%; height: 8px; background: rgba(0,0,0,0.2); z-index: 1000;
+        .title-badge {
+            background: linear-gradient(45deg, #ff4757, #ffa502);
+            padding: 8px 20px; border-radius: 50px; font-size: 14px;
+            font-weight: 600; text-transform: uppercase; letter-spacing: 2px;
+            margin-bottom: 15px; box-shadow: 0 0 20px rgba(255,71,87,0.5);
         }
-        #progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #ff6b81, #fbc531, #2ed573); border-radius: 0 5px 5px 0; }
-        
-        /* 3. Floating Music Player */
-        #music-player {
+
+        #start-screen h1 {
+            font-size: 42px; font-weight: 800; font-family: 'Fredoka', sans-serif;
+            margin-bottom: 15px; background: linear-gradient(to right, #fff, #ced6e0);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        #start-screen p { color: #a4b0be; font-size: 16px; max-width: 500px; line-height: 1.6; margin-bottom: 30px; }
+
+        .key-ignition-btn {
+            background: linear-gradient(135deg, #2ed573, #20bf6b);
+            color: white; border: none; padding: 20px 45px;
+            font-size: 20px; font-weight: 700; border-radius: 60px;
+            cursor: pointer; box-shadow: 0 10px 30px rgba(46,213,115,0.4);
+            display: flex; align-items: center; gap: 15px; transition: all 0.3s ease;
+            animation: pulseIgnition 2s infinite;
+        }
+
+        .key-ignition-btn:hover { transform: scale(1.08); box-shadow: 0 15px 40px rgba(46,213,115,0.6); }
+
+        @keyframes pulseIgnition {
+            0% { box-shadow: 0 0 0 0 rgba(46, 213, 115, 0.7); }
+            70% { box-shadow: 0 0 0 25px rgba(46, 213, 115, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(46, 213, 115, 0); }
+        }
+
+        /* 2. DASHBOARD HUD (HEADS UP DISPLAY) - FIXED ON TOP */
+        #hud-dashboard {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 900px; background: var(--dark-glass);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--hud-border); border-radius: 20px;
+            padding: 12px 25px; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+
+        .hud-item { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #dfe4ea; }
+        .hud-item i { font-size: 18px; color: var(--gold-glow); }
+        .hud-value { font-weight: 700; color: #fff; }
+
+        .progress-bar-container {
+            width: 140px; height: 10px; background: rgba(255,255,255,0.1);
+            border-radius: 10px; overflow: hidden; position: relative;
+        }
+        #route-progress { width: 0%; height: 100%; background: linear-gradient(90deg, #2ed573, #fbc531); transition: width 0.1s ease; }
+
+        /* Audio Toggle Floating Button */
+        #sound-toggle {
             position: fixed; bottom: 20px; right: 20px;
-            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px);
-            padding: 10px 20px; border-radius: 50px; z-index: 1000;
-            display: flex; align-items: center; gap: 15px; border: 1px solid rgba(255,255,255,0.4);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3); color: white; display: none;
+            width: 50px; height: 50px; border-radius: 50%;
+            background: var(--dark-glass); border: 1px solid var(--hud-border);
+            color: #fff; font-size: 18px; cursor: pointer; z-index: 1000;
+            display: flex; justify-content: center; align-items: center;
+            backdrop-filter: blur(10px); transition: 0.3s;
         }
-        .music-btn { background: none; border: none; color: white; font-size: 20px; cursor: pointer; transition: 0.3s; }
-        .music-btn:hover { color: #ff4757; transform: scale(1.2); }
+        #sound-toggle:hover { transform: scale(1.1); background: var(--primary-accent); }
 
-        /* 4. The Road & Car */
-        #road {
+        /* 3. DYNAMIC ROAD & MOVING VEHICLE */
+        #road-wrapper {
             position: absolute; left: 50%; transform: translateX(-50%);
-            width: 140px; height: 400vh; background: #2c3e50; z-index: 5;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5);
-        }
-        #road::after {
-            content: ''; position: absolute; left: 50%; transform: translateX(-50%);
-            width: 6px; height: 100%; background-image: linear-gradient(to bottom, white 50%, transparent 50%); background-size: 100% 60px;
-            animation: moveRoad 1s linear infinite;
-        }
-        @keyframes moveRoad { from { background-position: 0 0; } to { background-position: 0 60px; } }
-
-        #car {
-            position: fixed; left: 50%; bottom: 100px; transform: translateX(-50%);
-            width: 80px; z-index: 10; transition: transform 0.1s;
-            filter: drop-shadow(0 20px 15px rgba(0,0,0,0.6));
+            width: 140px; height: 400vh; background: #22272e;
+            border-left: 8px solid #fff; border-right: 8px solid #fff;
+            z-index: 5;
         }
 
-        /* 5. Stages & Milestones */
+        #road-lines {
+            position: absolute; left: 50%; transform: translateX(-50%);
+            width: 6px; height: 100%;
+            background-image: linear-gradient(to bottom, #fbc531 60%, transparent 40%);
+            background-size: 100% 90px;
+        }
+
+        #interactive-car {
+            position: fixed; left: 50%; bottom: 60px;
+            transform: translateX(-50%); width: 75px; z-index: 10;
+            filter: drop-shadow(0 15px 12px rgba(0,0,0,0.6));
+            transition: transform 0.1s ease-out;
+        }
+
+        /* Continuous Headlight Glow Effect */
+        #interactive-car::before {
+            content: ''; position: absolute; top: -50px; left: 50%;
+            transform: translateX(-50%); width: 100px; height: 80px;
+            background: radial-gradient(ellipse at bottom, rgba(255, 255, 225, 0.4) 0%, rgba(255, 255, 255, 0) 70%);
+            pointer-events: none;
+        }
+
+        /* 4. SCENIC STAGES & PARALLAX SECTIONS */
         .stage {
             position: relative; width: 100vw; height: 100vh;
-            display: flex; justify-content: center; align-items: center; z-index: 6; pointer-events: none;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 6; pointer-events: none;
+            background-size: cover; background-position: center;
+            background-attachment: fixed;
+            transition: filter 0.8s ease;
         }
-        .stage-content {
-            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(15px);
-            padding: 40px; border-radius: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            pointer-events: auto; max-width: 450px; text-align: center;
-            border: 1px solid rgba(255,255,255,0.6); transition: 0.4s ease;
+
+        /* Stage Images (High-Res Real Places) */
+        #stage-1 { background-image: url('https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=1920&q=80'); }
+        #stage-2 { background-image: url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1920&q=80'); }
+        #stage-3 { background-image: url('https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1920&q=80'); }
+        #stage-4 { background-image: url('https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?auto=format&fit=crop&w=1920&q=80'); }
+
+        /* Glassmorphic Content Boxes */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px); padding: 35px 40px; border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4); pointer-events: auto;
+            max-width: 460px; border: 1px solid rgba(255, 255, 255, 0.6);
+            color: #2f3542; text-align: center; transform: translateY(0);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .stage-content:hover { transform: translateY(-10px) scale(1.02) !important; box-shadow: 0 30px 50px rgba(0,0,0,0.4); }
-        
-        .stage:nth-child(even) .stage-content { transform: translateX(-250px); }
-        .stage:nth-child(odd) .stage-content { transform: translateX(250px); }
-        .stage:last-child .stage-content { transform: translateX(0) translateY(50px) !important; background: rgba(0,0,0,0.7); color: white; border-color: #fbc531; }
 
-        h2 { font-size: 32px; color: #2c3e50; margin-bottom: 15px; font-weight: 900; }
-        .stage:last-child h2 { color: #fbc531; }
-        p { font-size: 18px; color: #555; line-height: 1.6; }
-        .stage:last-child p { color: #ddd; }
-
-        /* Buttons & Interactions */
-        .btn {
-            background: linear-gradient(45deg, #ff4757, #ff6b81); color: white;
-            border: none; padding: 15px 30px; font-size: 18px; font-weight: bold;
-            border-radius: 50px; cursor: pointer; margin-top: 20px;
-            box-shadow: 0 10px 20px rgba(255,71,87,0.4); transition: 0.3s;
+        .stage-tag {
+            background: #2f3542; color: #fbc531; font-size: 11px;
+            font-weight: 700; text-transform: uppercase; padding: 4px 12px;
+            border-radius: 20px; letter-spacing: 1.5px; display: inline-block; margin-bottom: 10px;
         }
-        .btn:hover { transform: scale(1.1); box-shadow: 0 15px 30px rgba(255,71,87,0.6); }
 
-        /* Polaroid Memory Frame */
-        .polaroid {
-            background: white; padding: 10px 10px 30px 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            transform: rotate(-5deg); margin-top: 20px; display: inline-block;
+        .glass-card h2 { font-size: 30px; font-weight: 800; margin-bottom: 10px; font-family: 'Fredoka', sans-serif; }
+        .glass-card p { font-size: 15px; line-height: 1.6; color: #57606f; margin-bottom: 15px; }
+
+        /* Stage Content Placements for Tablet Viewport */
+        .stage-left { transform: translateX(-240px); }
+        .stage-right { transform: translateX(240px); }
+
+        /* 5. INTERACTIVE FOOD MENU GRID */
+        .food-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
+        .food-item {
+            background: #f1f2f6; border-radius: 12px; padding: 10px;
+            cursor: pointer; transition: 0.2s ease; border: 2px solid transparent;
+            display: flex; flex-direction: column; align-items: center; gap: 5px;
         }
-        .polaroid img { width: 100%; max-width: 250px; height: auto; }
+        .food-item:hover { background: #fff; border-color: var(--primary-accent); transform: translateY(-3px); }
+        .food-item span { font-size: 24px; }
+        .food-item label { font-size: 11px; font-weight: 600; cursor: pointer; color: #2f3542; }
 
-        /* Dream Door */
-        #dream-door {
-            width: 120px; margin-top: 30px; cursor: pointer; transition: 0.3s;
-            filter: drop-shadow(0 0 15px rgba(251, 197, 49, 0.6));
+        #food-status-box {
+            margin-top: 15px; padding: 10px; border-radius: 10px;
+            background: #ffeaa7; color: #d35400; font-weight: 700; font-size: 13px;
+            display: none; animation: popIn 0.3s ease;
         }
-        #dream-door:hover { transform: scale(1.1); filter: drop-shadow(0 0 30px rgba(251, 197, 49, 1)); }
 
-        /* Snowfall Canvas */
-        #snow-canvas { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 1; opacity: 0; transition: opacity 2s; }
+        /* 6. PHOTO MEMORY POLAROID FRAME */
+        .polaroid-frame {
+            background: #fff; padding: 12px 12px 25px 12px; border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3); transform: rotate(-3deg);
+            margin: 15px auto; width: 85%; transition: 0.3s ease;
+        }
+        .polaroid-frame:hover { transform: rotate(0deg) scale(1.03); }
+        .polaroid-frame img { width: 100%; height: 160px; object-fit: cover; border-radius: 4px; }
+        .polaroid-caption { font-family: 'Sacramento', cursive; font-size: 24px; color: #2f3542; margin-top: 8px; }
 
-        /* Birthday Modal */
-        #modal {
+        /* Interactive Door Element */
+        #door-wrapper { position: relative; margin-top: 15px; cursor: pointer; display: inline-block; }
+        #interactive-door {
+            width: 110px; transition: transform 0.3s ease;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+        }
+        #door-wrapper:hover #interactive-door { transform: scale(1.1); }
+
+        /* 7. GRAND BIRTHDAY MODAL & LETTER SHEET */
+        #birthday-modal {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.9); display: flex; justify-content: center; align-items: center;
-            z-index: 2000; opacity: 0; visibility: hidden; transition: 0.5s;
-        }
-        #modal.active { opacity: 1; visibility: visible; }
-        
-        .modal-box {
-            background: #fff; padding: 50px; border-radius: 20px; text-align: center;
-            max-width: 700px; width: 90%; transform: scale(0.5); transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 0 80px rgba(255,215,0,0.5); position: relative;
-        }
-        #modal.active .modal-box { transform: scale(1); }
-
-        .modal-title { font-family: 'Caveat', cursive; font-size: 60px; color: #ff4757; margin-bottom: 20px; }
-        
-        /* Typewriter Text */
-        #typewriter {
-            font-family: 'Caveat', cursive; font-size: 28px; color: #333; text-align: left;
-            min-height: 200px; border-top: 2px dashed #ccc; padding-top: 20px; margin-top: 20px;
+            background: rgba(0, 0, 0, 0.88); backdrop-filter: blur(12px);
+            z-index: 10000; display: flex; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            padding: 20px;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .stage:nth-child(even) .stage-content, .stage:nth-child(odd) .stage-content { transform: translateX(0); margin: 0 20px; }
-            #road { left: 15%; }
-            #car { left: 15%; width: 60px; }
+        #birthday-modal.show { opacity: 1; visibility: visible; }
+
+        .letter-paper {
+            background: #fff9ef; border-radius: 20px; padding: 45px 40px;
+            max-width: 650px; width: 100%; max-height: 85vh; overflow-y: auto;
+            box-shadow: 0 0 50px rgba(251, 197, 49, 0.4); text-align: center;
+            color: #2f3542; position: relative; transform: scale(0.8);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid #ffeaa7;
+        }
+
+        #birthday-modal.show .letter-paper { transform: scale(1); }
+
+        .letter-paper h1 {
+            font-family: 'Fredoka', sans-serif; color: var(--primary-accent);
+            font-size: 38px; margin-bottom: 5px;
+        }
+
+        .letter-paper .subtitle { font-size: 14px; text-transform: uppercase; letter-spacing: 2px; color: #a4b0be; margin-bottom: 25px; }
+
+        .cake-animation { font-size: 65px; margin: 15px 0; animation: bounce 2s infinite; }
+
+        .custom-letter-text {
+            font-size: 16px; line-height: 1.8; color: #353b48; text-align: left;
+            background: #fff; padding: 25px; border-radius: 15px;
+            border-left: 4px solid var(--primary-accent); box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .stamp-mark {
+            position: absolute; top: 30px; right: 30px; width: 70px; height: 70px;
+            border: 3px dashed #ff4757; border-radius: 50%; display: flex;
+            justify-content: center; align-items: center; color: #ff4757;
+            font-weight: 800; font-size: 11px; transform: rotate(12deg); opacity: 0.8;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, var(--primary-accent), #ff6b81);
+            color: white; border: none; padding: 14px 35px; font-size: 16px;
+            font-weight: 600; border-radius: 50px; cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 71, 87, 0.4); transition: 0.3s;
+        }
+        .action-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(255, 71, 87, 0.6); }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        @keyframes popIn { 0% { transform: scale(0.8); } 100% { transform: scale(1); } }
+
+        /* MEDIA QUERIES FOR TABLET & MOBILE RESPONSIVENESS */
+        @media (max-width: 900px) {
+            .stage-left, .stage-right { transform: translateX(0) !important; }
+            #road-wrapper { left: 15%; }
+            #interactive-car { left: 15%; }
+            .glass-card { margin-left: 30%; max-width: 80%; }
+            #hud-dashboard { font-size: 12px; padding: 10px 15px; }
+            .hud-hide-mobile { display: none; }
+        }
+
+        @media (max-width: 600px) {
+            #road-wrapper, #interactive-car { left: 12px; }
+            .glass-card { margin-left: 60px; max-width: 82%; padding: 20px; }
+            #start-screen h1 { font-size: 30px; }
+            .food-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. Preloader -->
-    <div id="preloader">
-        <div class="loader"></div>
-        <h2 style="margin-top: 20px; color: white;">Packing Bags for Ladakh...</h2>
+    <!-- AUDIO ENGINE (ONLINE WEBAUDIO / GOOGLE ACTIONS SFX) -->
+    <audio id="sfx-engine" src="https://actions.google.com/sounds/v1/transportation/car_engine_start.ogg" preload="auto"></audio>
+    <audio id="sfx-driving" src="https://actions.google.com/sounds/v1/transportation/car_driving_slowly.ogg" loop preload="auto"></audio>
+    <audio id="sfx-eat" src="https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg" preload="auto"></audio>
+    <audio id="sfx-knock" src="https://actions.google.com/sounds/v1/foley/door_knock.ogg" preload="auto"></audio>
+    <audio id="sfx-magic" src="https://actions.google.com/sounds/v1/cartoon/magic_chime.ogg" preload="auto"></audio>
+    <audio id="sfx-cheer" src="https://actions.google.com/sounds/v1/crowds/cheering_happy.ogg" preload="auto"></audio>
+
+    <!-- 1. START IGNITION SCREEN OVERLAY -->
+    <div id="start-screen">
+        <div class="title-badge"><i class="fa-solid fa-compass"></i> Birthday Special Expedition</div>
+        <h1>The Journey to Ladakh</h1>
+        <p>Turn up your speaker volume! You are about to drive on a real roadtrip experience to your dream destination.</p>
+        <button class="key-ignition-btn" onclick="igniteEngine()">
+            <i class="fa-solid fa-key"></i> Start Engine & Drive
+        </button>
     </div>
 
-    <!-- 2. Progress Bar -->
-    <div id="progress-container"><div id="progress-bar"></div></div>
-
-    <!-- 3. Music Player -->
-    <div id="music-player">
-        <i class="fas fa-music"></i>
-        <span style="font-size: 14px; font-weight: bold;">Favorite Song</span>
-        <button class="music-btn" onclick="togglePlay()"><i class="fas fa-play" id="play-icon"></i></button>
-    </div>
-
-    <!-- Audios -->
-    <audio id="bgMusic" src="https://www.bensound.com/bensound-music/bensound-acousticbreeze.mp3" loop></audio>
-    <audio id="engineSound" src="https://actions.google.com/sounds/v1/transportation/car_engine_start.ogg"></audio>
-    <audio id="doorSound" src="https://actions.google.com/sounds/v1/foley/door_knock.ogg"></audio>
-    <audio id="magicSound" src="https://actions.google.com/sounds/v1/cartoon/magic_chime.ogg"></audio>
-
-    <!-- Start Screen -->
-    <div id="start-screen" style="position: fixed; width: 100vw; height: 100vh; background: #111; z-index: 500; display: flex; justify-content: center; align-items: center; color: white; flex-direction: column;">
-        <h1 style="font-size: 50px; text-align: center; margin-bottom: 20px;">Ready for the Trip? 🏔️</h1>
-        <p>Put on your headphones & Turn up the volume!</p>
-        <button class="btn" onclick="startJourney()">START ENGINE 🔑</button>
-    </div>
-
-    <div id="road"></div>
-    <img id="car" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Car_top_view.svg/512px-Car_top_view.svg.png" alt="Car">
-
-    <!-- Stages -->
-    <div class="stage" style="margin-top: 100vh;">
-        <div class="stage-content">
-            <h2>📍 The Beginning</h2>
-            <p>Safar shuru ho raha hai. Apna seatbelt baandh lo, kyunki yeh journey bohot khoobsurat hone wali hai.</p>
+    <!-- 2. TABLET HUD (HEADS-UP DISPLAY) DASHBOARD -->
+    <div id="hud-dashboard">
+        <div class="hud-item">
+            <i class="fa-solid fa-location-dot"></i>
+            <div>GPS: <span class="hud-value" id="hud-location">Srinagar</span></div>
         </div>
-    </div>
-
-    <div class="stage">
-        <div class="stage-content">
-            <h2>📸 First Stop: Memories</h2>
-            <p>Yaad hai yeh din? Safar mein yaadein bohot zaroori hain.</p>
-            <div class="polaroid">
-                <!-- Replace with her actual photo link -->
-                <img src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Memory">
-                <p style="font-family: 'Caveat'; font-size: 24px; margin-top: 10px;">Best Day Ever! ❤️</p>
+        <div class="hud-item hud-hide-mobile">
+            <i class="fa-solid fa-gauge-high"></i>
+            <div>Speed: <span class="hud-value" id="hud-speed">0 KM/H</span></div>
+        </div>
+        <div class="hud-item">
+            <i class="fa-solid fa-gas-pump"></i>
+            <div>Fuel: <span class="hud-value" id="hud-fuel">100%</span></div>
+        </div>
+        <div class="hud-item">
+            <i class="fa-solid fa-route"></i>
+            <div class="progress-bar-container">
+                <div id="route-progress"></div>
             </div>
         </div>
     </div>
 
-    <div class="stage">
-        <div class="stage-content">
-            <h2>🍜 The Food Stop</h2>
-            <p>Bhookh lagi hai? Maine tumhara favorite khana order kar diya hai!</p>
-            <button class="btn" onclick="eatFood(this)"><i class="fas fa-hamburger"></i> Eat Favorite Food</button>
+    <!-- SOUND TOGGLE FLOATING BUTTON -->
+    <button id="sound-toggle" onclick="toggleAudio()"><i class="fa-solid fa-volume-high" id="sound-icon"></i></button>
+
+    <!-- 3. ROAD & TOP-DOWN CAR -->
+    <div id="road-wrapper">
+        <div id="road-lines"></div>
+    </div>
+    <img id="interactive-car" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Car_top_view.svg/512px-Car_top_view.svg.png" alt="Car Vehicle">
+
+    <!-- 4. STAGES / LEVELS -->
+
+    <!-- LEVEL 1: SRINAGAR STARTING POINT -->
+    <div class="stage" id="stage-1">
+        <div class="glass-card stage-left">
+            <span class="stage-tag"><i class="fa-solid fa-flag-checkered"></i> Point 01</span>
+            <h2>Srinagar Valley</h2>
+            <p>Safar ka pehla muqam. The scenic valleys of Dal Lake and lush greens. Seatbelt tightly baandh lo, the adventure begins!</p>
+            <p style="font-size: 13px; font-weight: 700; color: #00b894;"><i class="fa-solid fa-angles-down"></i> Scroll down to accelerate car</p>
         </div>
     </div>
 
-    <!-- Final Stage: Ladakh -->
-    <div class="stage" style="position: relative;">
-        <!-- Snow Canvas specifically for this section -->
-        <canvas id="snow-canvas"></canvas>
-        <div class="stage-content" id="ladakh-card">
-            <h2>🏔️ Welcome to Ladakh!</h2>
-            <p>Tumhara sapna sach ho gaya. Yeh raha tumhara khud ka ghar, theek pahaadon ke beech.</p>
-            <img id="dream-door" src="https://cdn-icons-png.flaticon.com/512/3030/3030104.png" alt="Door" onclick="openDoor()">
-            <p style="font-size: 14px; margin-top: 15px;">Click the door to unlock your dream!</p>
-        </div>
-    </div>
-
-    <!-- The Birthday Modal -->
-    <div id="modal">
-        <div class="modal-box">
-            <h1 class="modal-title">Happy Birthday! 🎂</h1>
-            <div style="font-size: 60px; margin-bottom: 20px;">🏡✨🏔️</div>
-            <div id="typewriter"></div>
-            <button class="btn" style="margin-top: 30px;" onclick="closeModal()">Keep Dreaming ✨</button>
-        </div>
-    </div>
-
-    <script>
-        // 1. Preloader Logic
-        window.onload = () => {
-            setTimeout(() => {
-                document.getElementById('preloader').style.opacity = '0';
-                setTimeout(() => document.getElementById('preloader').style.display = 'none', 1000);
-            }, 2000);
-        };
-
-        // Variables
-        const bgMusic = document.getElementById('bgMusic');
-        const engineSound = document.getElementById('engineSound');
-        const playIcon = document.getElementById('play-icon');
-        let isPlaying = true;
-        let snowActive = false;
-
-        // 2. Start Journey
-        function startJourney() {
-            engineSound.play();
-            setTimeout(() => {
-                bgMusic.play();
-                document.getElementById('start-screen').style.display = 'none';
-                document.getElementById('music-player').style.display = 'flex';
-                document.body.style.overflowY = 'auto'; // Enable scroll
-            }, 1500);
-        }
-        document.body.style.overflowY = 'hidden'; // Hide scroll initially
-
-        // 3. Music Toggle
-        function togglePlay() {
-            if(isPlaying) { bgMusic.pause(); playIcon.className = 'fas fa-play'; }
-            else { bgMusic.play(); playIcon.className = 'fas fa-pause'; }
-            isPlaying = !isPlaying;
-        }
-
-        // 4. Advanced Scroll Mechanics (Progress, Car rotation, Background Color)
-        window.addEventListener('scroll', () => {
-            let scrollTop = window.scrollY;
-            let docHeight = document.body.scrollHeight - window.innerHeight;
-            let scrollPercent = (scrollTop / docHeight) * 100;
+    <!-- LEVEL 2: FOOD CAFE STOP (INTERACTIVE MENU) -->
+    <div class="stage" id="stage-2">
+        <div class="glass-card stage-right">
+            <span class="stage-tag"><i class="fa-solid fa-utensils"></i> Point 02</span>
+            <h2>Highway Dhaba & Pitstop</h2>
+            <p>Lamba rasta hai, energy recharge karna zaroori hai! Unka favorite khana select karo:</p>
             
-            // Update Progress Bar
-            document.getElementById('progress-bar').style.width = scrollPercent + "%";
+            <div class="food-grid">
+                <div class="food-item" onclick="orderFood('Momos 🥟', 'Steam Momos + Spicy Chutney')">
+                    <span>🥟</span>
+                    <label>Momos</label>
+                </div>
+                <div class="food-item" onclick="orderFood('Hot Pizza 🍕', 'Extra Cheese Burst Pizza')">
+                    <span>🍕</span>
+                    <label>Pizza</label>
+                </div>
+                <div class="food-item" onclick="orderFood('Crispy Burger 🍔', 'Double Patty Burger')">
+                    <span>🍔</span>
+                    <label>Burger</label>
+                </div>
+                <div class="food-item" onclick="orderFood('Biryani 🍲', 'Special Dum Biryani')">
+                    <span>🍲</span>
+                    <label>Biryani</label>
+                </div>
+                <div class="food-item" onclick="orderFood('Coffee 🧋', 'Chilled Cold Coffee')">
+                    <span>🧋</span>
+                    <label>Coffee</label>
+                </div>
+                <div class="food-item" onclick="orderFood('Ice Cream 🍦', 'Choco Sundae Delight')">
+                    <span>🍦</span>
+                    <label>Ice Cream</label>
+                </div>
+            </div>
 
-            // Car Wobble
-            let wobble = Math.sin(scrollTop * 0.05) * 4;
-            document.getElementById('car').style.transform = `translateX(-50%) rotate(${wobble}deg)`;
+            <div id="food-status-box"></div>
+        </div>
+    </div>
 
-            // Trigger Snow in Ladakh (Last 20% of scroll)
-            if(scrollPercent > 80 && !snowActive) {
-                document.getElementById('snow-canvas').style.opacity = '1';
-                startSnow();
-                snowActive = true;
+    <!-- LEVEL 3: MEMORY PHOTO PITSTOP -->
+    <div class="stage" id="stage-3">
+        <div class="glass-card stage-left">
+            <span class="stage-tag"><i class="fa-solid fa-camera-retro"></i> Point 03</span>
+            <h2>Zoji La Mountain Pass</h2>
+            <p>Pahaadon ke beech ek khoobsurat yaad. High altitude scenic viewpoint!</p>
+            
+            <div class="polaroid-frame">
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Scenic View">
+                <div class="polaroid-caption">Best Memories Together ✨</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LEVEL 4: LADAKH DREAM DESTINATION -->
+    <div class="stage" id="stage-4">
+        <div class="glass-card" style="transform: translateX(0); background: rgba(18, 18, 18, 0.85); color: #fff; border-color: rgba(255,255,255,0.2);">
+            <span class="stage-tag" style="background: #fbc531; color: #000;"><i class="fa-solid fa-mountain"></i> Final Destination</span>
+            <h2 style="color: #fbc531;">Welcome to Ladakh!</h2>
+            <p style="color: #dcdde1;">Pangong Lake ke kinare tumhara <strong>Dream House</strong> unlock ho chuka hai. Darwaza knock karo!</p>
+            
+            <div id="door-wrapper" onclick="openDreamHouse()">
+                <img id="interactive-door" src="https://cdn-icons-png.flaticon.com/512/3030/3030104.png" alt="Dream House Door">
+            </div>
+            <p style="font-size: 12px; color: #a4b0be; margin-top: 10px;">(Tap the Door to Knock)</p>
+        </div>
+    </div>
+
+    <!-- 5. GRAND BIRTHDAY MODAL & PERSONAL LETTER -->
+    <div id="birthday-modal">
+        <div class="letter-paper">
+            <div class="stamp-mark">PASSPORT<br>LADAKH</div>
+            <h1>Happy Birthday! 🎂</h1>
+            <div class="subtitle">Official Title Deed to Your Dream House</div>
+
+            <div class="cake-animation">🏡✨🎈</div>
+
+            <div class="custom-letter-text">
+                <p><strong>To My Most Special Person,</strong></p><br>
+                <p>Akhir kar hum Ladakh pahoanch gaye! Yeh raha tumhara dream house—jahan pahaadon ka view hai, thandak hai, aur kitchen tumhare favorite khano se hamesha bhara rahega.</p><br>
+                <p>Tumhara har ek sapna (chahe wo ghoomna ho, khana ho, ya apna pyara sa ghar ho) zaroor poora hoga. Is birthday par meri taraf se yeh chota sa digital safar tumhare liye!</p><br>
+                <p style="text-align: right; font-weight: 700;">— Warmest Wishes Always ❤️</p>
+            </div>
+
+            <button class="action-btn" onclick="closeModal()"><i class="fa-solid fa-heart"></i> Save This Memory</button>
+        </div>
+    </div>
+
+    <!-- 6. LOGIC & FUNCTIONALITY JS SCRIPT -->
+    <script>
+        // DOM ELEMENTS
+        const car = document.getElementById("interactive-car");
+        const hudLocation = document.getElementById("hud-location");
+        const hudSpeed = document.getElementById("hud-speed");
+        const hudFuel = document.getElementById("hud-fuel");
+        const routeProgress = document.getElementById("route-progress");
+        const stage1 = document.getElementById("stage-1");
+        const stage2 = document.getElementById("stage-2");
+        const stage3 = document.getElementById("stage-3");
+        const stage4 = document.getElementById("stage-4");
+
+        // AUDIO ELEMENTS
+        const sfxEngine = document.getElementById("sfx-engine");
+        const sfxDriving = document.getElementById("sfx-driving");
+        const sfxEat = document.getElementById("sfx-eat");
+        const sfxKnock = document.getElementById("sfx-knock");
+        const sfxMagic = document.getElementById("sfx-magic");
+        const sfxCheer = document.getElementById("sfx-cheer");
+
+        let isAudioMuted = false;
+        let isDriving = false;
+        let scrollTimer = null;
+        let lastScrollY = 0;
+
+        // DISABLE SCROLL INITIALLY
+        document.body.style.overflow = "hidden";
+
+        // 1. ENGINE IGNITION
+        function igniteEngine() {
+            if(!isAudioMuted) sfxEngine.play();
+            
+            const startScreen = document.getElementById("start-screen");
+            startScreen.style.opacity = "0";
+            
+            setTimeout(() => {
+                startScreen.style.visibility = "hidden";
+                document.body.style.overflowY = "auto";
+            }, 1000);
+        }
+
+        // 2. TOGGLE AUDIO MUTED
+        function toggleAudio() {
+            isAudioMuted = !isAudioMuted;
+            const soundIcon = document.getElementById("sound-icon");
+            if (isAudioMuted) {
+                soundIcon.className = "fa-solid fa-volume-xmark";
+                sfxDriving.pause();
+            } else {
+                soundIcon.className = "fa-solid fa-volume-high";
+            }
+        }
+
+        // 3. ADVANCED SCROLL & SPEEDOMETER & FUEL LOGIC
+        window.addEventListener("scroll", () => {
+            const scrollY = window.scrollY;
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollY / maxScroll) * 100;
+
+            // Route Progress Bar Update
+            routeProgress.style.width = scrollPercent + "%";
+
+            // Fuel Consumption Simulation (100% down to 25%)
+            const currentFuel = Math.max(25, Math.round(100 - (scrollPercent * 0.75)));
+            hudFuel.innerText = currentFuel + "%";
+
+            // Calculate Speed based on scroll delta
+            const deltaScroll = Math.abs(scrollY - lastScrollY);
+            lastScrollY = scrollY;
+            const calculatedSpeed = Math.min(120, Math.round(deltaScroll * 3));
+            hudSpeed.innerText = calculatedSpeed + " KM/H";
+
+            // Car Steering Wobble Effect
+            const wobble = Math.sin(scrollY * 0.04) * 4;
+            car.style.transform = `translateX(-50%) rotate(${wobble}deg)`;
+
+            // Audio Driving Loop
+            if (deltaScroll > 2 && !isDriving && !isAudioMuted) {
+                sfxDriving.play();
+                isDriving = true;
+            }
+
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(() => {
+                sfxDriving.pause();
+                isDriving = false;
+                hudSpeed.innerText = "0 KM/H";
+            }, 250);
+
+            // Location Change Detection Based on Scroll Positions
+            if (scrollPercent < 25) {
+                hudLocation.innerText = "Srinagar";
+            } else if (scrollPercent >= 25 && scrollPercent < 60) {
+                hudLocation.innerText = "Highway Dhaba";
+            } else if (scrollPercent >= 60 && scrollPercent < 85) {
+                hudLocation.innerText = "Zoji La Pass";
+            } else {
+                hudLocation.innerText = "Ladakh Peak";
+            }
+
+            // Dynamic Day-to-Night Ambient Tint Transition
+            if (scrollPercent > 70) {
+                document.body.style.backgroundColor = "#050608";
+            } else {
+                document.body.style.backgroundColor = "#0d0d11";
             }
         });
 
-        // 5. Food Interaction
-        function eatFood(btn) {
-            btn.innerHTML = "🤤 Yummy! 100% Energy Restored!";
-            btn.style.background = "#2ed573";
-            confetti({ particleCount: 50, spread: 60, origin: { y: 0.8 } });
+        // 4. INTERACTIVE FOOD MENU ORDER LOGIC
+        function orderFood(title, detail) {
+            if(!isAudioMuted) sfxEat.play();
+            const statusBox = document.getElementById("food-status-box");
+            statusBox.style.display = "block";
+            statusBox.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${detail} Served! Energy Refueled to 100%! ⚡`;
+            
+            // Fuel boost effect
+            hudFuel.innerText = "100%";
         }
 
-        // 6. Snowfall Engine (HTML5 Canvas)
-        function startSnow() {
-            const canvas = document.getElementById("snow-canvas");
-            const ctx = canvas.getContext("2d");
-            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-            let particles = [];
-            for(let i=0; i<100; i++) particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*4+1, d: Math.random()*100 });
-            
-            function draw() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
-                ctx.beginPath();
-                for(let i=0; i<100; i++) {
-                    let p = particles[i];
-                    ctx.moveTo(p.x, p.y); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2, true);
-                }
-                ctx.fill(); update();
-            }
-            let angle = 0;
-            function update() {
-                angle += 0.01;
-                for(let i=0; i<100; i++) {
-                    let p = particles[i];
-                    p.y += Math.cos(angle+p.d) + 1 + p.r/2;
-                    p.x += Math.sin(angle) * 2;
-                    if(p.y > canvas.height) { particles[i] = { x: Math.random()*canvas.width, y: 0, r: p.r, d: p.d }; }
-                }
-            }
-            setInterval(draw, 33);
-        }
+        // 5. DOOR KNOCK & DREAM HOUSE CELEBRATION MODAL
+        function openDreamHouse() {
+            if(!isAudioMuted) sfxKnock.play();
 
-        // 7. Door Unlock & Typewriter Modal
-        const letterText = "Dear [Name],\n\nYeh raha tumhara Dream House Ladakh ki waadiyon mein! Pahaadon ki thandi hawa, tumhara favorite khana, aur ek sukoon bhari life jo tum humesha se chahti thi.\n\nHappy Birthday! May all your real dreams come true just like this virtual one. ❤️";
-        let typingInterval;
-
-        function openDoor() {
-            document.getElementById('doorSound').play();
+            const doorImg = document.getElementById("interactive-door");
+            doorImg.style.transform = "rotate(12deg) scale(1.1)";
             
+            setTimeout(() => { doorImg.style.transform = "rotate(-12deg) scale(1.1)"; }, 120);
+            setTimeout(() => { doorImg.style.transform = "rotate(0deg) scale(1)"; }, 240);
+
             setTimeout(() => {
-                document.getElementById('magicSound').play();
-                document.getElementById('modal').classList.add('active');
-                
-                // Grand Confetti
-                var duration = 5 * 1000; var end = Date.now() + duration;
-                (function frame() {
-                    confetti({ particleCount: 10, angle: 60, spread: 55, origin: { x: 0 }, zIndex: 3000 });
-                    confetti({ particleCount: 10, angle: 120, spread: 55, origin: { x: 1 }, zIndex: 3000 });
-                    if (Date.now() < end) requestAnimationFrame(frame);
-                }());
+                if(!isAudioMuted) {
+                    sfxMagic.play();
+                    sfxCheer.play();
+                }
 
-                // Typewriter Effect
-                let i = 0;
-                document.getElementById('typewriter').innerHTML = "";
-                clearInterval(typingInterval);
-                typingInterval = setInterval(() => {
-                    if(i < letterText.length) {
-                        if(letterText.charAt(i) === '\n') {
-                            document.getElementById('typewriter').innerHTML += "<br>";
-                        } else {
-                            document.getElementById('typewriter').innerHTML += letterText.charAt(i);
-                        }
-                        i++;
-                    } else { clearInterval(typingInterval); }
-                }, 50); // Speed of typing
+                // BLAST MULTI-STAGE CANVAS CONFETTI
+                triggerConfettiBlast();
 
+                // SHOW MODAL
+                document.getElementById("birthday-modal").classList.add("show");
             }, 1000);
         }
 
         function closeModal() {
-            document.getElementById('modal').classList.remove('active');
+            document.getElementById("birthday-modal").classList.remove("show");
+        }
+
+        // 6. CANVAS CONFETTI ENGINE
+        function triggerConfettiBlast() {
+            const count = 200;
+            const defaults = { origin: { y: 0.7 } };
+
+            function fire(particleRatio, opts) {
+                confetti(Object.assign({}, defaults, opts, {
+                    particleCount: Math.floor(count * particleRatio)
+                }));
+            }
+
+            fire(0.25, { spread: 26, startVelocity: 55, colors: ['#ff4757', '#fbc531'] });
+            fire(0.2, { spread: 60, colors: ['#2ed573', '#ffffff'] });
+            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+            fire(0.1, { spread: 120, startVelocity: 45 });
         }
     </script>
 </body>
