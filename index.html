@@ -64,7 +64,6 @@
 
         #start-screen p { color: #a4b0be; font-size: 16px; max-width: 500px; line-height: 1.6; margin-bottom: 20px; }
 
-        /* FEATURE 9 & 10: CUSTOMIZER & NAME */
         .customizer-box { margin-bottom: 30px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); }
         .customizer-box input { padding: 10px; border-radius: 8px; border: none; outline: none; margin-bottom: 15px; width: 80%; text-align: center; font-family: 'Poppins'; }
         .color-btns { display: flex; gap: 10px; justify-content: center; }
@@ -109,7 +108,6 @@
         }
         #route-progress { width: 0%; height: 100%; background: linear-gradient(90deg, #2ed573, #fbc531); transition: width 0.1s ease; }
 
-        /* FEATURE 13: FUEL REFILL */
         #fuel-icon { cursor: pointer; transition: 0.3s; }
         #fuel-icon:hover { color: #ff4757; transform: scale(1.2); }
 
@@ -151,7 +149,6 @@
             pointer-events: none;
         }
 
-        /* FEATURE 12: WILDLIFE */
         .wildlife { position: absolute; font-size: 35px; z-index: 6; opacity: 0.8; }
 
         /* 4. SCENIC STAGES */
@@ -163,9 +160,9 @@
         }
 
         #stage-1 { background-image: url('https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=1920&q=80'); }
-        #stage-2 { background-image: url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1920&q=80'); }
+        #stage-2 { background-image: url('IMG-20260923-WA0019.jpg'); } /* Updated Dhaba Pic */
         #stage-3 { background-image: url('https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1920&q=80'); }
-        #stage-4 { background-image: url('https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?auto=format&fit=crop&w=1920&q=80'); }
+        #stage-4 { background-image: url('IMG-20231114-WA0024.jpg'); } /* Updated Ladakh Pic */
 
         .glass-card {
             background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(16px);
@@ -193,6 +190,16 @@
             transition: 0.3s;
         }
         .puzzle-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(156,136,255,0.6); }
+
+        /* SRINAGAR MEMORY GALLERY */
+        .srinagar-gallery {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0;
+        }
+        .srinagar-gallery img {
+            width: 100%; height: 90px; object-fit: cover; border-radius: 8px; cursor: pointer;
+            border: 2px solid #fff; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .srinagar-gallery img:hover { transform: scale(1.05); border-color: var(--primary-accent); box-shadow: 0 8px 15px rgba(255,71,87,0.3); }
 
         /* 5. INTERACTIVE FOOD MENU GRID */
         .food-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
@@ -222,10 +229,6 @@
         .polaroid-frame img { width: 100%; height: 140px; object-fit: cover; border-radius: 4px; }
         .polaroid-caption { font-family: 'Sacramento', cursive; font-size: 22px; color: #2f3542; margin-top: 8px; }
 
-        /* Interactive Door Element */
-        #door-wrapper { position: relative; margin-top: 10px; cursor: pointer; display: inline-block; }
-        #interactive-door { width: 90px; transition: transform 0.3s ease; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5)); }
-        #door-wrapper:hover #interactive-door { transform: scale(1.1); }
         .house-cost { color: #fbc531; font-weight: bold; font-size: 14px; margin-top: 5px; }
 
         /* FEATURE 7: SNOW WEATHER SYSTEM */
@@ -238,7 +241,293 @@
             100% { transform: translateY(100vh) scale(1); opacity: 0; }
         }
 
-        /* PUZZLE MODAL */
+        /* MODALS */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.8); z-index: 10001; display: flex;
+            justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.4s;
+        }
+        .modal-overlay.show { opacity: 1; visibility: visible; }
+        .puzzle-box {
+            background: #fff; border-radius: 20px; padding: 30px; text-align: center; max-width: 400px; width: 90%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5); color: #2f3542;
+        }
+        .puzzle-box h3 { font-family: 'Fredoka'; color: #8c7ae6; margin-bottom: 15px; font-size: 24px; }
+        
+        /* Multiple Choice Options */
+        .puzzle-option-btn {
+            background: #dfe6e9; color: #2d3436; padding: 12px; margin: 6px 0; border: none; border-radius: 8px;
+            font-weight: 600; font-family: 'Poppins', sans-serif; cursor: pointer; width: 100%; transition: 0.2s;
+        }
+        .puzzle-option-btn:hover { background: var(--secondary-accent); color: #fff; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(46, 213, 115, 0.4); }
+
+        #puzzle-feedback { margin-top: 10px; font-weight: boldHere is the completely updated code based on your requests! I've made the following special updates just for you:
+
+1. **Multiple Choice Puzzles**: Replaced the typing box with 3 clickable options for each puzzle. It's much cleaner and more fun.
+2. **Your Custom Memories**: Added your beautifully nostalgic (and slightly sassy) message ("Pehlai mai aap ki taraf dekh ta b nhi tha... i don't miss ya") to a special interactive memory gallery in Stage 3 using your Srinagar pics[span_6](start_span)[span_6](end_span)[span_7](start_span)[span_7](end_span)[span_8](start_span)[span_8](end_span).
+3. **Your Custom Images Backgrounds**: 
+   * **Stage 1 (Srinagar)** now features your first group pic[span_9](start_span)[span_9](end_span).
+   * **Stage 2 (Restaurant)** now features the "Karbone" restaurant pic you provided[span_10](start_span)[span_10](end_span).
+   * **Stage 4 (Ladakh)** now features the dining hall pic you labeled for Ladakh[span_11](start_span)[span_11](end_span).
+4. **Door Fixed**: Swapped that weird graphic for a proper, classy wooden door you can actually knock on. 
+
+Here is the updated HTML file. Just copy, paste, and run!
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Ultimate Roadtrip to Your Dreams | Ladakh Odyssey</title>
+
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="[https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Poppins:wght@300;400;600;800&family=Sacramento&display=swap](https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Poppins:wght@300;400;600;800&family=Sacramento&display=swap)" rel="stylesheet">
+    <link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css)">
+
+    <!-- External Audio & Confetti Libraries -->
+    <script src="[https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js](https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js)"></script>
+
+    <style>
+        :root {
+            --primary-accent: #ff4757;
+            --secondary-accent: #2ed573;
+            --gold-glow: #fbc531;
+            --dark-glass: rgba(18, 18, 18, 0.85);
+            --light-glass: rgba(255, 255, 255, 0.85);
+            --hud-border: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            background-color: #0d0d11;
+            color: #fff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            transition: background-color 1s ease;
+        }
+
+        /* 1. START ENGINE OVERLAY SCREEN */
+        #start-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(135deg, #09090e 0%, #1a1c29 100%);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 9999; text-align: center; padding: 20px;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        .title-badge {
+            background: linear-gradient(45deg, #ff4757, #ffa502);
+            padding: 8px 20px; border-radius: 50px; font-size: 14px;
+            font-weight: 600; text-transform: uppercase; letter-spacing: 2px;
+            margin-bottom: 15px; box-shadow: 0 0 20px rgba(255,71,87,0.5);
+        }
+
+        #start-screen h1 {
+            font-size: 42px; font-weight: 800; font-family: 'Fredoka', sans-serif;
+            margin-bottom: 15px; background: linear-gradient(to right, #fff, #ced6e0);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        #start-screen p { color: #a4b0be; font-size: 16px; max-width: 500px; line-height: 1.6; margin-bottom: 20px; }
+
+        .customizer-box { margin-bottom: 30px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); }
+        .customizer-box input { padding: 10px; border-radius: 8px; border: none; outline: none; margin-bottom: 15px; width: 80%; text-align: center; font-family: 'Poppins'; }
+        .color-btns { display: flex; gap: 10px; justify-content: center; }
+        .c-btn { width: 30px; height: 30px; border-radius: 50%; cursor: pointer; border: 2px solid #fff; transition: 0.3s; }
+        .c-btn:hover { transform: scale(1.2); }
+
+        .key-ignition-btn {
+            background: linear-gradient(135deg, #2ed573, #20bf6b);
+            color: white; border: none; padding: 20px 45px;
+            font-size: 20px; font-weight: 700; border-radius: 60px;
+            cursor: pointer; box-shadow: 0 10px 30px rgba(46,213,115,0.4);
+            display: flex; align-items: center; gap: 15px; transition: all 0.3s ease;
+            animation: pulseIgnition 2s infinite;
+        }
+        .key-ignition-btn:hover { transform: scale(1.08); box-shadow: 0 15px 40px rgba(46,213,115,0.6); }
+
+        @keyframes pulseIgnition {
+            0% { box-shadow: 0 0 0 0 rgba(46, 213, 115, 0.7); }
+            70% { box-shadow: 0 0 0 25px rgba(46, 213, 115, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(46, 213, 115, 0); }
+        }
+
+        /* 2. EXTENDED DASHBOARD HUD */
+        #hud-dashboard {
+            position: fixed; top: 15px; left: 50%; transform: translateX(-50%);
+            width: 95%; max-width: 1100px; background: var(--dark-glass);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--hud-border); border-radius: 20px;
+            padding: 10px 20px; z-index: 1000;
+            display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: all 0.3s ease; gap: 10px;
+        }
+
+        .hud-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #dfe4ea; }
+        .hud-item i { font-size: 16px; color: var(--gold-glow); }
+        .hud-value { font-weight: 700; color: #fff; }
+        .wallet-text { color: #2ed573 !important; font-size: 15px;}
+
+        .progress-bar-container {
+            width: 100px; height: 8px; background: rgba(255,255,255,0.1);
+            border-radius: 10px; overflow: hidden; position: relative;
+        }
+        #route-progress { width: 0%; height: 100%; background: linear-gradient(90deg, #2ed573, #fbc531); transition: width 0.1s ease; }
+
+        #fuel-icon { cursor: pointer; transition: 0.3s; }
+        #fuel-icon:hover { color: #ff4757; transform: scale(1.2); }
+
+        #sound-toggle {
+            position: fixed; bottom: 20px; right: 20px;
+            width: 50px; height: 50px; border-radius: 50%;
+            background: var(--dark-glass); border: 1px solid var(--hud-border);
+            color: #fff; font-size: 18px; cursor: pointer; z-index: 1000;
+            display: flex; justify-content: center; align-items: center;
+            backdrop-filter: blur(10px); transition: 0.3s;
+        }
+        #sound-toggle:hover { transform: scale(1.1); background: var(--primary-accent); }
+
+        /* 3. DYNAMIC ROAD & MOVING VEHICLE */
+        #road-wrapper {
+            position: absolute; left: 50%; transform: translateX(-50%);
+            width: 140px; height: 400vh; background: #22272e;
+            border-left: 8px solid #fff; border-right: 8px solid #fff; z-index: 5;
+        }
+
+        #road-lines {
+            position: absolute; left: 50%; transform: translateX(-50%);
+            width: 6px; height: 100%;
+            background-image: linear-gradient(to bottom, #fbc531 60%, transparent 40%);
+            background-size: 100% 90px;
+        }
+
+        #interactive-car {
+            position: fixed; left: 50%; bottom: 60px;
+            transform: translateX(-50%); width: 75px; z-index: 10;
+            filter: drop-shadow(0 15px 12px rgba(0,0,0,0.6));
+            transition: transform 0.1s ease-out, filter 0.3s ease;
+        }
+
+        #interactive-car::before {
+            content: ''; position: absolute; top: -50px; left: 50%;
+            transform: translateX(-50%); width: 100px; height: 80px;
+            background: radial-gradient(ellipse at bottom, rgba(255, 255, 225, 0.4) 0%, rgba(255, 255, 255, 0) 70%);
+            pointer-events: none;
+        }
+
+        .wildlife { position: absolute; font-size: 35px; z-index: 6; opacity: 0.8; }
+
+        /* 4. SCENIC STAGES */
+        .stage {
+            position: relative; width: 100vw; height: 100vh;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 6; pointer-events: none;
+            background-size: cover; background-position: center; background-attachment: fixed;
+        }
+
+        /* CUSTOM IMAGES FOR BACKGROUNDS */
+        #stage-1 { background-image: url('IMG-20260706-WA0057.jpg'); } 
+        #stage-2 { background-image: url('IMG-20260923-WA0019.jpg'); } 
+        #stage-3 { background-image: url('[https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1920&q=80](https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1920&q=80)'); }
+        #stage-4 { background-image: url('IMG-20231114-WA0024.jpg'); } 
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(16px);
+            padding: 30px; border-radius: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            pointer-events: auto; max-width: 440px; border: 1px solid rgba(255, 255, 255, 0.6);
+            color: #2f3542; text-align: center;
+        }
+        .stage-tag {
+            background: #2f3542; color: #fbc531; font-size: 11px; font-weight: 700;
+            text-transform: uppercase; padding: 4px 12px; border-radius: 20px;
+            letter-spacing: 1.5px; display: inline-block; margin-bottom: 10px;
+        }
+
+        .glass-card h2 { font-size: 28px; font-weight: 800; margin-bottom: 10px; font-family: 'Fredoka', sans-serif; }
+        .glass-card p { font-size: 14px; line-height: 1.6; color: #57606f; margin-bottom: 15px; }
+
+        .stage-left { transform: translateX(-260px); }
+        .stage-right { transform: translateX(260px); }
+
+        .puzzle-btn {
+            background: linear-gradient(45deg, #8c7ae6, #9c88ff); color: #fff;
+            border: none; padding: 10px 20px; border-radius: 50px; font-weight: 600;
+            cursor: pointer; box-shadow: 0 5px 15px rgba(156,136,255,0.4); margin-top: 10px;
+            transition: 0.3s;
+        }
+        .puzzle-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(156,136,255,0.6); }
+
+        /* 5. INTERACTIVE FOOD MENU GRID */
+        .food-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
+        .food-item {
+            background: #f1f2f6; border-radius: 12px; padding: 8px; cursor: pointer;
+            transition: 0.2s ease; border: 2px solid transparent; display: flex;
+            flex-direction: column; align-items: center; gap: 2px;
+        }
+        .food-item:hover { background: #fff; border-color: var(--primary-accent); transform: translateY(-3px); }
+        .food-item span { font-size: 22px; }
+        .food-item label { font-size: 10px; font-weight: 600; cursor: pointer; color: #2f3542; }
+        .cost-tag { color: var(--primary-accent); font-size: 9px; font-weight: 800; }
+
+        #food-status-box {
+            margin-top: 10px; padding: 8px; border-radius: 10px;
+            background: #ffeaa7; color: #d35400; font-weight: 700; font-size: 12px;
+            display: none; animation: popIn 0.3s ease;
+        }
+
+        /* 6. MEMORY POLAROID GRID */
+        .memory-grid {
+            display: flex; gap: 10px; justify-content: center; margin-top: 15px;
+        }
+        .memory-polaroid {
+            background: #fff; padding: 6px 6px 15px 6px; border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); cursor: pointer;
+            transition: 0.3s ease; width: 30%;
+        }
+        .memory-polaroid:hover { transform: scale(1.1) rotate(5deg); z-index: 10; box-shadow: 0 8px 25px rgba(0,0,0,0.5); }
+        .memory-polaroid img { width: 100%; height: 70px; object-fit: cover; border-radius: 4px; }
+        .memory-caption { font-family: 'Sacramento', cursive; font-size: 14px; color: #2f3542; margin-top: 5px; font-weight: bold;}
+
+        /* MEMORY MESSAGE MODAL */
+        #memory-msg-modal {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.85); z-index: 10002; display: flex;
+            justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.4s;
+        }
+        #memory-msg-modal.show { opacity: 1; visibility: visible; }
+        .memory-msg-box {
+            background: #fff; border-radius: 20px; padding: 30px; text-align: center; max-width: 450px;
+            box-shadow: 0 10px 40px rgba(251, 197, 49, 0.4); color: #2f3542; border: 4px solid #fbc531;
+        }
+        .memory-msg-box h3 { font-family: 'Fredoka'; color: #e15f41; font-size: 26px; margin-bottom: 15px; }
+        .memory-msg-box p { font-size: 15px; line-height: 1.8; color: #57606f; font-style: italic; }
+
+        /* Interactive Door Element */
+        #door-wrapper { position: relative; margin-top: 10px; cursor: pointer; display: inline-block; }
+        #interactive-door { width: 80px; transition: transform 0.3s ease; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)); }
+        #door-wrapper:hover #interactive-door { transform: scale(1.1); }
+        .house-cost { color: #fbc531; font-weight: bold; font-size: 14px; margin-top: 5px; }
+
+        .snow-particle {
+            position: fixed; top: -10px; background: #fff; border-radius: 50%;
+            pointer-events: none; z-index: 999; animation: fall linear forwards; opacity: 0;
+        }
+        @keyframes fall {
+            0% { transform: translateY(0) scale(0); opacity: 1; }
+            100% { transform: translateY(100vh) scale(1); opacity: 0; }
+        }
+
+        /* PUZZLE MODAL (UPDATED FOR MCQ) */
         #puzzle-modal {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: rgba(0,0,0,0.8); z-index: 10001; display: flex;
@@ -250,11 +539,16 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.5); color: #2f3542;
         }
         .puzzle-box h3 { font-family: 'Fredoka'; color: #8c7ae6; margin-bottom: 15px; font-size: 24px; }
-        .puzzle-box input { padding: 10px; border: 2px solid #dfe6e9; border-radius: 8px; width: 100%; margin: 15px 0; outline: none; text-align: center;}
-        .puzzle-box button { background: var(--secondary-accent); color: #fff; padding: 10px 20px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;}
-        #puzzle-feedback { margin-top: 10px; font-weight: bold; font-size: 13px; }
+        
+        .mcq-options { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+        .mcq-btn {
+            background: #f1f2f6; border: 2px solid #dfe6e9; padding: 12px; border-radius: 10px;
+            font-weight: 600; cursor: pointer; transition: 0.2s; color: #2f3542; font-size: 14px;
+        }
+        .mcq-btn:hover { background: #dfe6e9; border-color: #8c7ae6; }
+        
+        #puzzle-feedback { margin-top: 10px; font-weight: bold; font-size: 14px; }
 
-        /* FEATURE 8: TOAST NOTIFICATIONS */
         #toast-container { position: fixed; top: 80px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; }
         .toast { background: var(--primary-accent); color: #fff; padding: 12px 20px; border-radius: 10px; font-weight: 600; font-size: 13px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); animation: slideIn 0.3s forwards, fadeOut 0.5s forwards 3s; }
         @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
@@ -307,25 +601,36 @@
 <body>
 
     <!-- AUDIO ENGINE (SFX & BGM) -->
-    <audio id="sfx-engine" src="https://actions.google.com/sounds/v1/transportation/car_engine_start.ogg" preload="auto"></audio>
-    <audio id="sfx-driving" src="https://actions.google.com/sounds/v1/transportation/car_driving_slowly.ogg" loop preload="auto"></audio>
-    <audio id="sfx-eat" src="https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg" preload="auto"></audio>
-    <audio id="sfx-knock" src="https://actions.google.com/sounds/v1/foley/door_knock.ogg" preload="auto"></audio>
-    <audio id="sfx-magic" src="https://actions.google.com/sounds/v1/cartoon/magic_chime.ogg" preload="auto"></audio>
-    <audio id="sfx-cheer" src="https://actions.google.com/sounds/v1/crowds/cheering_happy.ogg" preload="auto"></audio>
-    <audio id="bgm-music" src="https://actions.google.com/sounds/v1/water/waves_crashing_on_rock_beach.ogg" loop preload="auto"></audio>
+    <audio id="sfx-engine" src="[https://actions.google.com/sounds/v1/transportation/car_engine_start.ogg](https://actions.google.com/sounds/v1/transportation/car_engine_start.ogg)" preload="auto"></audio>
+    <audio id="sfx-driving" src="[https://actions.google.com/sounds/v1/transportation/car_driving_slowly.ogg](https://actions.google.com/sounds/v1/transportation/car_driving_slowly.ogg)" loop preload="auto"></audio>
+    <audio id="sfx-eat" src="[https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg](https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg)" preload="auto"></audio>
+    <audio id="sfx-knock" src="[https://actions.google.com/sounds/v1/foley/door_knock.ogg](https://actions.google.com/sounds/v1/foley/door_knock.ogg)" preload="auto"></audio>
+    <audio id="sfx-magic" src="[https://actions.google.com/sounds/v1/cartoon/magic_chime.ogg](https://actions.google.com/sounds/v1/cartoon/magic_chime.ogg)" preload="auto"></audio>
+    <audio id="sfx-cheer" src="[https://actions.google.com/sounds/v1/crowds/cheering_happy.ogg](https://actions.google.com/sounds/v1/crowds/cheering_happy.ogg)" preload="auto"></audio>
+    <audio id="bgm-music" src="[https://actions.google.com/sounds/v1/water/waves_crashing_on_rock_beach.ogg](https://actions.google.com/sounds/v1/water/waves_crashing_on_rock_beach.ogg)" loop preload="auto"></audio>
 
     <!-- TOAST NOTIFICATIONS -->
     <div id="toast-container"></div>
 
-    <!-- PUZZLE MODAL -->
+    <!-- PUZZLE MODAL (MCQ UPDATED) -->
     <div id="puzzle-modal">
         <div class="puzzle-box">
             <h3>Brain Teaser! 🧩</h3>
             <p id="puzzle-question">Loading...</p>
-            <input type="text" id="puzzle-answer" placeholder="Type your answer here..." autocomplete="off">
-            <button onclick="submitPuzzle()">Solve & Earn $500</button>
+            <div id="mcq-container" class="mcq-options">
+                <!-- Buttons injected by JS -->
+            </div>
             <div id="puzzle-feedback"></div>
+            <button onclick="closePuzzleModal()" style="margin-top: 10px; background: #a4b0be; color: white; border: none; padding: 5px 15px; border-radius: 5px; cursor: pointer;">Close</button>
+        </div>
+    </div>
+
+    <!-- MEMORY MESSAGE MODAL (NEW) -->
+    <div id="memory-msg-modal">
+        <div class="memory-msg-box">
+            <h3>Secret Memory Unlocked ✨</h3>
+            <p>"Pehlai mai aap ki taraf dekh ta b nhi tha but gradually hum nai batt ki aur dherau dherai hum choti se batt pr b ladhaye kr tai thai but still 10 min badh hum phir sai wisai hi hotai thai like kuch hova hi na ho. <br><br><b>Aur haa i don't miss ya 😏</b>"</p>
+            <button onclick="closeMemoryMsg()" class="puzzle-btn" style="margin-top: 20px;">Haha, Okay! ❤️</button>
         </div>
     </div>
 
@@ -378,7 +683,7 @@
     <div class="wildlife" style="top: 150vh; left: 10%;">🐑</div>
     <div class="wildlife" style="top: 280vh; right: 10%;">🐂</div>
 
-    <img id="interactive-car" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Car_top_view.svg/512px-Car_top_view.svg.png" alt="Car Vehicle">
+    <img id="interactive-car" src="[https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Car_top_view.svg/512px-Car_top_view.svg.png](https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Car_top_view.svg/512px-Car_top_view.svg.png)" alt="Car Vehicle">
 
     <!-- 4. STAGES / LEVELS -->
 
@@ -386,19 +691,19 @@
     <div class="stage" id="stage-1">
         <div class="glass-card stage-left">
             <span class="stage-tag"><i class="fa-solid fa-flag-checkered"></i> Point 01</span>
-            <h2>Srinagar Valley</h2>
+            <h2>Srinagar Memories</h2>
             <p>Safar ka pehla muqam. Puzzles solve karo aur paise kamao aage badhne ke liye!</p>
             <button class="puzzle-btn" id="btn-puz-1" onclick="openPuzzle(1)"><i class="fa-solid fa-brain"></i> Play Stage 1 Puzzle</button>
             <p style="font-size: 13px; font-weight: 700; color: #00b894; margin-top: 15px;"><i class="fa-solid fa-angles-down"></i> Scroll down to accelerate</p>
         </div>
     </div>
 
-    <!-- LEVEL 2: FOOD CAFE STOP -->
+    <!-- LEVEL 2: FOOD CAFE STOP (RESTAURANT BACKGROUND) -->
     <div class="stage" id="stage-2">
         <div class="glass-card stage-right">
             <span class="stage-tag"><i class="fa-solid fa-utensils"></i> Point 02</span>
-            <h2>Highway Dhaba</h2>
-            <p>Bhook lagi hai? Earn money first, then buy food to regain energy!</p>
+            <h2>Karbone Cafe</h2>
+            <p>Bhook lagi hai? Earn money first, then buy food to regain energy at our spot!</p>
             <button class="puzzle-btn" id="btn-puz-2" onclick="openPuzzle(2)"><i class="fa-solid fa-brain"></i> Play Stage 2 Puzzle</button>
             
             <div class="food-grid">
@@ -429,13 +734,24 @@
     <div class="stage" id="stage-3">
         <div class="glass-card stage-left">
             <span class="stage-tag"><i class="fa-solid fa-camera-retro"></i> Point 03</span>
-            <h2>Zoji La Mountain Pass</h2>
-            <p>Pahaadon ke beech ek khoobsurat yaad. Earn your final funds here for the house!</p>
+            <h2>Nostalgia Point</h2>
+            <p>Click on our old pictures to reveal a special memory message before the final stretch!</p>
             <button class="puzzle-btn" id="btn-puz-3" onclick="openPuzzle(3)"><i class="fa-solid fa-brain"></i> Play Stage 3 Puzzle</button>
             
-            <div class="polaroid-frame">
-                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Scenic View">
-                <div class="polaroid-caption">Best Memories Together ✨</div>
+            <!-- CUSTOM MEMORY GALLERY -->
+            <div class="memory-grid">
+                <div class="memory-polaroid" onclick="showMemoryMsg()">
+                    <img src="IMG-20260923-WA0018.jpg" alt="Memory 1">
+                    <div class="memory-caption">Tap Me</div>
+                </div>
+                <div class="memory-polaroid" onclick="showMemoryMsg()">
+                    <img src="IMG-20260923-WA0016.jpg" alt="Memory 2">
+                    <div class="memory-caption">Tap Me</div>
+                </div>
+                <div class="memory-polaroid" onclick="showMemoryMsg()">
+                    <img src="IMG-20260923-WA0017.jpg" alt="Memory 3">
+                    <div class="memory-caption">Tap Me</div>
+                </div>
             </div>
         </div>
     </div>
@@ -445,13 +761,14 @@
         <div class="glass-card" style="transform: translateX(0); background: rgba(18, 18, 18, 0.9); color: #fff; border-color: rgba(255,255,255,0.2);">
             <span class="stage-tag" style="background: #fbc531; color: #000;"><i class="fa-solid fa-mountain"></i> Final Destination</span>
             <h2 style="color: #fbc531;">Welcome to Ladakh!</h2>
-            <p style="color: #dcdde1;">Pangong Lake ke kinare tumhara Dream House ready hai.</p>
+            <p style="color: #dcdde1;">Tumhara Dream House aur dining room ready hai.</p>
             <p class="house-cost">Cost to Unlock: $1000</p>
             
+            <!-- PROPER DOOR ICON ADDED -->
             <div id="door-wrapper" onclick="openDreamHouse()">
-                <img id="interactive-door" src="https://cdn-icons-png.flaticon.com/512/3030/3030104.png" alt="Dream House Door">
+                <img id="interactive-door" src="[https://cdn-icons-png.flaticon.com/512/3203/3203061.png](https://cdn-icons-png.flaticon.com/512/3203/3203061.png)" alt="Dream House Wooden Door">
             </div>
-            <p style="font-size: 11px; color: #a4b0be; margin-top: 5px;">(Tap the Door to Buy & Knock)</p>
+            <p style="font-size: 11px; color: #a4b0be; margin-top: 5px;">(Tap the Wooden Door to Buy & Knock)</p>
         </div>
     </div>
 
@@ -492,22 +809,39 @@
         let isDriving = false;
         let scrollTimer = null;
         let lastScrollY = 0;
-        let money = 0; // ECONOMY SYSTEM
+        let money = 0; 
         let currentFuel = 100;
         let tollPaid = false;
         let driverName = "Special Person";
 
-        // PUZZLE DATA (3 Levels)
+        // PUZZLE DATA (Updated to Multiple Choice Options)
         const puzzles = [
-            { id: 1, q: "I have keys but no locks. I have space but no room. You can enter but can't go outside. What am I?", a: "keyboard", solved: false },
-            { id: 2, q: "I am full of holes but still hold water. What am I?", a: "sponge", solved: false },
-            { id: 3, q: "What goes up but never comes down?", a: "age", solved: false }
+            { 
+                id: 1, 
+                q: "I have keys but no locks. I have space but no room. You can enter but can't go outside. What am I?", 
+                options: ["A Map", "A Keyboard", "A Piano"], 
+                ans: "A Keyboard", 
+                solved: false 
+            },
+            { 
+                id: 2, 
+                q: "I am full of holes but still hold water. What am I?", 
+                options: ["A Net", "A Sieve", "A Sponge"], 
+                ans: "A Sponge", 
+                solved: false 
+            },
+            { 
+                id: 3, 
+                q: "What goes up but never comes down?", 
+                options: ["Your Age", "A Balloon", "A Rocket"], 
+                ans: "Your Age", 
+                solved: false 
+            }
         ];
         let currentPuzzle = 0;
 
         document.body.style.overflow = "hidden";
 
-        // ECONOMY UPDATE
         function updateWallet(amount) {
             money += amount;
             hudWallet.innerText = `$${money}`;
@@ -515,12 +849,10 @@
             setTimeout(() => hudWallet.style.transform = "scale(1)", 300);
         }
 
-        // CAR CUSTOMIZER
         function setCarColor(filterVal) {
             car.style.filter = `drop-shadow(0 15px 12px rgba(0,0,0,0.6)) ${filterVal}`;
         }
 
-        // 1. ENGINE IGNITION
         function igniteEngine() {
             const nameInput = document.getElementById("driver-name").value;
             if(nameInput.trim() !== "") driverName = nameInput;
@@ -540,7 +872,6 @@
             }, 1000);
         }
 
-        // TOAST NOTIFICATIONS (FEATURE 8)
         function showToast(msg) {
             const container = document.getElementById("toast-container");
             const toast = document.createElement("div");
@@ -550,7 +881,6 @@
             setTimeout(() => toast.remove(), 3500);
         }
 
-        // AUDIO TOGGLE
         function toggleAudio() {
             isAudioMuted = !isAudioMuted;
             const soundIcon = document.getElementById("sound-icon");
@@ -563,37 +893,64 @@
             }
         }
 
-        // PUZZLE LOGIC (FEATURES 2)
+        // --- NEW MCQ PUZZLE LOGIC ---
         function openPuzzle(level) {
             currentPuzzle = level;
             const puz = puzzles[level-1];
             if(puz.solved) { alert("You already solved this puzzle!"); return; }
             
             document.getElementById("puzzle-question").innerText = puz.q;
-            document.getElementById("puzzle-answer").value = "";
             document.getElementById("puzzle-feedback").innerText = "";
+            
+            const mcqContainer = document.getElementById("mcq-container");
+            mcqContainer.innerHTML = ""; // Clear old options
+            
+            puz.options.forEach(option => {
+                const btn = document.createElement("button");
+                btn.className = "mcq-btn";
+                btn.innerText = option;
+                btn.onclick = () => checkMCQAnswer(option, puz.ans);
+                mcqContainer.appendChild(btn);
+            });
+
             document.getElementById("puzzle-modal").classList.add("show");
         }
 
-        function submitPuzzle() {
-            const ans = document.getElementById("puzzle-answer").value.toLowerCase().trim();
+        function checkMCQAnswer(selected, correct) {
             const puz = puzzles[currentPuzzle-1];
-            
-            if(ans === puz.a) {
-                document.getElementById("puzzle-feedback").style.color = "green";
-                document.getElementById("puzzle-feedback").innerText = "Correct! +$500";
+            const feedback = document.getElementById("puzzle-feedback");
+
+            if(selected === correct) {
+                feedback.style.color = "green";
+                feedback.innerText = "Correct! +$500";
                 puz.solved = true;
                 updateWallet(500);
-                document.getElementById(`btn-puz-${currentPuzzle}`).innerText = "✅ Solved";
-                document.getElementById(`btn-puz-${currentPuzzle}`).style.background = "#2ed573";
-                setTimeout(() => document.getElementById("puzzle-modal").classList.remove("show"), 1000);
+                
+                // Update stage button visually
+                const btnRef = document.getElementById(`btn-puz-${currentPuzzle}`);
+                btnRef.innerText = "✅ Solved";
+                btnRef.style.background = "#2ed573";
+                
+                // Auto close after correct
+                setTimeout(() => closePuzzleModal(), 1200);
             } else {
-                document.getElementById("puzzle-feedback").style.color = "red";
-                document.getElementById("puzzle-feedback").innerText = "Wrong! Try again.";
+                feedback.style.color = "red";
+                feedback.innerText = "Wrong! Try another option.";
             }
         }
 
-        // PURCHASING FOOD (FEATURE 3)
+        function closePuzzleModal() {
+            document.getElementById("puzzle-modal").classList.remove("show");
+        }
+
+        // --- CUSTOM MEMORY TEXT MODAL ---
+        function showMemoryMsg() {
+            document.getElementById("memory-msg-modal").classList.add("show");
+        }
+        function closeMemoryMsg() {
+            document.getElementById("memory-msg-modal").classList.remove("show");
+        }
+
         function orderFood(title, detail, cost) {
             if(money < cost) {
                 showToast(`Not enough money! You need $${cost}.`);
@@ -609,7 +966,6 @@
             statusBox.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${detail} Bought! Fuel 100% ⚡`;
         }
 
-        // FUEL REFILL MINIGAME (FEATURE 13)
         function refuel() {
             if(currentFuel >= 90) { showToast("Tank is already full!"); return; }
             if(money < 20) { showToast("Need $20 to refuel!"); return; }
@@ -619,7 +975,6 @@
             showToast("Vehicle Refueled!");
         }
 
-        // SNOW WEATHER (FEATURE 7)
         function createSnow() {
             if(Math.random() > 0.8) {
                 const snow = document.createElement("div");
@@ -634,7 +989,6 @@
             }
         }
 
-        // ADVANCED SCROLL LOGIC
         window.addEventListener("scroll", () => {
             const scrollY = window.scrollY;
             const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
@@ -642,29 +996,24 @@
 
             routeProgress.style.width = scrollPercent + "%";
 
-            // Compass (Feature 6)
             const wobble = Math.sin(scrollY * 0.04) * 5;
             car.style.transform = `translateX(-50%) rotate(${wobble}deg)`;
             document.getElementById("hud-compass").style.transform = `rotate(${wobble * 5}deg)`;
 
-            // Fuel Consumption
             currentFuel = Math.max(10, 100 - (scrollPercent * 0.8));
             document.getElementById("hud-fuel").innerText = Math.round(currentFuel) + "%";
             if(currentFuel < 20) document.getElementById("fuel-icon").style.color = "#ff4757";
             else document.getElementById("fuel-icon").style.color = "#fbc531";
 
-            // Speed
             const deltaScroll = Math.abs(scrollY - lastScrollY);
             lastScrollY = scrollY;
             document.getElementById("hud-speed").innerText = Math.min(120, Math.round(deltaScroll * 3)) + " KM/H";
 
-            // Altitude & Temp (Features 4 & 5)
-            const alt = Math.round(1585 + (scrollPercent * 19.15)); // up to ~3500m
-            const temp = Math.round(22 - (scrollPercent * 0.27)); // down to -5c
+            const alt = Math.round(1585 + (scrollPercent * 19.15)); 
+            const temp = Math.round(22 - (scrollPercent * 0.27)); 
             document.getElementById("hud-alt").innerText = alt + "m";
             document.getElementById("hud-temp").innerText = temp + "°C";
 
-            // Audio Driving
             if (deltaScroll > 2 && !isDriving && !isAudioMuted) {
                 sfxDriving.play(); isDriving = true;
             }
@@ -674,12 +1023,10 @@
                 document.getElementById("hud-speed").innerText = "0 KM/H";
             }, 250);
 
-            // Location & Environment 
             const locEl = document.getElementById("hud-location");
             if (scrollPercent < 25) locEl.innerText = "Srinagar";
             else if (scrollPercent >= 25 && scrollPercent < 60) {
-                locEl.innerText = "Highway Dhaba";
-                // Toll Checkpoint (Feature 15)
+                locEl.innerText = "Karbone Cafe";
                 if(!tollPaid) {
                     tollPaid = true;
                     if(money >= 10) { updateWallet(-10); showToast("Highway Toll Paid: -$10"); }
@@ -689,7 +1036,6 @@
             else if (scrollPercent >= 60 && scrollPercent < 85) locEl.innerText = "Zoji La Pass";
             else locEl.innerText = "Ladakh Peak";
 
-            // Weather & Day/Night (Features 7 & 14)
             if (scrollPercent > 60) {
                 document.body.style.backgroundColor = "#050608";
                 document.getElementById("hud-time").className = "fa-solid fa-moon";
@@ -700,7 +1046,7 @@
             }
         });
 
-        // HOUSE PURCHASE & DOOR (FEATURE 3)
+        // HOUSE PURCHASE & PROPER DOOR LOGIC
         function openDreamHouse() {
             if(money < 1000) {
                 showToast("You need $1000 to buy the house! Go back and solve puzzles.");
