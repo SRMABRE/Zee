@@ -304,17 +304,13 @@
 </head>
 <body>
 
-    <!-- AUDIO ENGINE -->
+    <!-- RELIABLE WEB DIRECT AUDIO SFX & BGM SOURCES -->
+    <audio id="bgm-music" src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=uplifting-acoustic-113936.mp3" loop preload="auto"></audio>
     <audio id="sfx-engine" src="https://actions.google.com/sounds/v1/transportation/car_engine_start.ogg" preload="auto"></audio>
     <audio id="sfx-driving" src="https://actions.google.com/sounds/v1/transportation/car_driving_slowly.ogg" loop preload="auto"></audio>
     <audio id="sfx-eat" src="https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg" preload="auto"></audio>
     <audio id="sfx-knock" src="https://actions.google.com/sounds/v1/foley/door_knock.ogg" preload="auto"></audio>
     <audio id="sfx-cheer" src="https://actions.google.com/sounds/v1/crowds/cheering_happy.ogg" preload="auto"></audio>
-
-    <!-- HIDDEN YOUTUBE PLAYER FOR GUARANTEED BGM PLAYBACK ("Yeh Dosti Hum Nahi Todenge") -->
-    <div id="yt-player-container" style="position: absolute; width: 0; height: 0; opacity: 0; pointer-events: none; overflow: hidden;">
-        <div id="yt-player"></div>
-    </div>
 
     <div id="toast-container"></div>
 
@@ -388,19 +384,19 @@
 
     <img id="interactive-car" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Car_top_view.svg/512px-Car_top_view.svg.png" alt="Car Vehicle">
 
-    <!-- LEVEL 1: SRINAGAR (First 4 User Images) -->
+    <!-- LEVEL 1: SRINAGAR (Standard Web Online Images) -->
     <div class="stage" id="stage-1">
         <div class="glass-card stage-left">
             <span class="stage-tag"><i class="fa-solid fa-flag-checkered"></i> Point 01</span>
             <h2>Srinagar Valley</h2>
             <p>Safar ka pehla muqam. Puzzles solve karo aur paise kamao aage badhne ke liye!</p>
             
-            <!-- Clickable Srinagar Gallery -->
+            <!-- Srinagar Gallery -->
             <div class="srinagar-gallery">
-                <img src="IMG-20260706-WA0057.jpg" alt="Srinagar Pic 1" onclick="openMemory()">
-                <img src="IMG-20260923-WA0018.jpg" alt="Srinagar Pic 2" onclick="openMemory()">
-                <img src="IMG-20260923-WA0017.jpg" alt="Srinagar Pic 3" onclick="openMemory()">
-                <img src="IMG-20260923-WA0016.jpg" alt="Srinagar Pic 4" onclick="openMemory()">
+                <img src="https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=400&q=80" alt="Srinagar Pic 1" onclick="openMemory()">
+                <img src="https://images.unsplash.com/photo-1566837945700-30057527ade0?auto=format&fit=crop&w=400&q=80" alt="Srinagar Pic 2" onclick="openMemory()">
+                <img src="https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=400&q=80" alt="Srinagar Pic 3" onclick="openMemory()">
+                <img src="https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=400&q=80" alt="Srinagar Pic 4" onclick="openMemory()">
             </div>
             <p style="font-size: 11px; color: #ff4757; margin-top: 5px; font-weight: 600;">(Tap photos to open memory ✨)</p>
 
@@ -409,7 +405,7 @@
         </div>
     </div>
 
-    <!-- LEVEL 2: MEMORABLE RESTAURANT (6th Image) -->
+    <!-- LEVEL 2: MEMORABLE RESTAURANT -->
     <div class="stage" id="stage-2">
         <div class="glass-card stage-right">
             <span class="stage-tag"><i class="fa-solid fa-utensils"></i> Point 02</span>
@@ -417,7 +413,7 @@
             <p>Bhook lagi hai? Earn money first, then buy food to regain energy!</p>
             
             <div class="polaroid-frame" style="width: 100%; margin-bottom: 10px; padding-bottom: 10px;">
-                <img src="IMG-20260923-WA0019.jpg" alt="Restaurant Pic" style="height: 130px;">
+                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80" alt="Restaurant Pic" style="height: 130px;">
             </div>
 
             <button class="puzzle-btn" id="btn-puz-2" onclick="openPuzzle(2)"><i class="fa-solid fa-brain"></i> Play Stage 2 Puzzle</button>
@@ -440,14 +436,14 @@
         </div>
     </div>
 
-    <!-- LEVEL 4: LADAKH DREAM DESTINATION (5th Image) -->
+    <!-- LEVEL 4: LADAKH DREAM DESTINATION -->
     <div class="stage" id="stage-4">
         <div class="glass-card" style="transform: translateX(0); background: rgba(18, 18, 18, 0.95); color: #fff; border-color: rgba(255,255,255,0.2);">
             <span class="stage-tag" style="background: #fbc531; color: #000;"><i class="fa-solid fa-mountain"></i> Final Destination</span>
             <h2 style="color: #fbc531;">Welcome to Ladakh!</h2>
             
             <div class="polaroid-frame" style="background: #2f3542; padding-bottom: 15px;">
-                <img src="IMG-20231114-WA0024.jpg" alt="Ladakh Pic">
+                <img src="https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?auto=format&fit=crop&w=600&q=80" alt="Ladakh Pic">
                 <div class="polaroid-caption" style="color: #fbc531;">The Ultimate Memory 🏔️</div>
             </div>
 
@@ -479,42 +475,17 @@
         </div>
     </div>
 
-    <!-- YOUTUBE IFRAME API SCRIPT FOR AUTOMATIC BGM -->
-    <script src="https://www.youtube.com/iframe_api"></script>
-
     <!-- LOGIC & FUNCTIONALITY JS SCRIPT -->
     <script>
         const car = document.getElementById("interactive-car");
         const hudWallet = document.getElementById("hud-wallet");
         const routeProgress = document.getElementById("route-progress");
         
+        const bgmMusic = document.getElementById("bgm-music");
         const sfxEngine = document.getElementById("sfx-engine");
         const sfxDriving = document.getElementById("sfx-driving");
         const sfxEat = document.getElementById("sfx-eat");
         const sfxKnock = document.getElementById("sfx-knock");
-
-        let ytPlayer = null;
-        let isYtReady = false;
-
-        // Load YouTube API to play "Yeh Dosti Hum Nahi Todenge"
-        function onYouTubeIframeAPIReady() {
-            ytPlayer = new YT.Player('yt-player', {
-                height: '0',
-                width: '0',
-                videoId: 'uS3T4T5Xm8E', // Instrumental / Cheerful Friendship Audio Stream
-                playerVars: {
-                    'autoplay': 0,
-                    'controls': 0,
-                    'loop': 1,
-                    'playlist': 'uS3T4T5Xm8E'
-                },
-                events: {
-                    'onReady': function(event) {
-                        isYtReady = true;
-                    }
-                }
-            });
-        }
 
         let isAudioMuted = false;
         let isDriving = false;
@@ -569,11 +540,9 @@
             document.getElementById("bday-name").innerText = driverName;
 
             if(!isAudioMuted) {
-                sfxEngine.play();
-                if(isYtReady && ytPlayer) {
-                    ytPlayer.setVolume(50);
-                    ytPlayer.playVideo();
-                }
+                sfxEngine.play().catch(e => console.log(e));
+                bgmMusic.volume = 0.4;
+                bgmMusic.play().catch(e => console.log("Audio play prevented:", e));
             }
             
             document.getElementById("start-screen").style.opacity = "0";
@@ -599,10 +568,10 @@
             if (isAudioMuted) {
                 soundIcon.className = "fa-solid fa-volume-xmark";
                 sfxDriving.pause();
-                if(ytPlayer && isYtReady) ytPlayer.pauseVideo();
+                bgmMusic.pause();
             } else {
                 soundIcon.className = "fa-solid fa-volume-high";
-                if(ytPlayer && isYtReady) ytPlayer.playVideo();
+                bgmMusic.play().catch(e => console.log(e));
             }
         }
 
@@ -658,7 +627,7 @@
             updateWallet(-cost);
             currentFuel = 100;
             document.getElementById("hud-fuel").innerText = "100%";
-            if(!isAudioMuted) sfxEat.play();
+            if(!isAudioMuted) sfxEat.play().catch(e => console.log(e));
             showToast(`${detail} Bought! Fuel 100% ⚡`);
         }
 
@@ -708,9 +677,16 @@
             document.getElementById("hud-alt").innerText = alt + "m";
             document.getElementById("hud-temp").innerText = temp + "°C";
 
-            if (deltaScroll > 2 && !isDriving && !isAudioMuted) { sfxDriving.play(); isDriving = true; }
+            if (deltaScroll > 2 && !isDriving && !isAudioMuted) { 
+                sfxDriving.play().catch(e => console.log(e)); 
+                isDriving = true; 
+            }
             clearTimeout(scrollTimer);
-            scrollTimer = setTimeout(() => { sfxDriving.pause(); isDriving = false; document.getElementById("hud-speed").innerText = "0 KM/H"; }, 250);
+            scrollTimer = setTimeout(() => { 
+                sfxDriving.pause(); 
+                isDriving = false; 
+                document.getElementById("hud-speed").innerText = "0 KM/H"; 
+            }, 250);
 
             const locEl = document.getElementById("hud-location");
             if (scrollPercent < 25) locEl.innerText = "Srinagar";
@@ -732,12 +708,12 @@
             if(money < 1000) { showToast("You need $1000 to buy the house! Solve puzzles first."); return; }
             updateWallet(-1000);
             
-            if(!isAudioMuted) sfxKnock.play();
+            if(!isAudioMuted) sfxKnock.play().catch(e => console.log(e));
             const doorEmoji = document.getElementById("door-emoji");
             doorEmoji.style.transform = "scale(1.3) rotate(15deg)";
             
             setTimeout(() => {
-                if(!isAudioMuted) document.getElementById("sfx-cheer").play();
+                if(!isAudioMuted) document.getElementById("sfx-cheer").play().catch(e => console.log(e));
                 triggerConfettiBlast();
                 document.getElementById("birthday-modal").classList.add("show");
             }, 800);
