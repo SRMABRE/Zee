@@ -310,7 +310,9 @@
     <audio id="sfx-eat" src="https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg" preload="auto"></audio>
     <audio id="sfx-knock" src="https://actions.google.com/sounds/v1/foley/door_knock.ogg" preload="auto"></audio>
     <audio id="sfx-cheer" src="https://actions.google.com/sounds/v1/crowds/cheering_happy.ogg" preload="auto"></audio>
-    <audio id="bgm-music" src="https://actions.google.com/sounds/v1/water/waves_crashing_on_rock_beach.ogg" loop preload="auto"></audio>
+    
+    <!-- FRIENDSHIP INSTRUMENTAL BGM SONG -->
+    <audio id="bgm-music" src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=acoustic-guitars-friendship-chill-112838.mp3" loop preload="auto"></audio>
 
     <div id="toast-container"></div>
 
@@ -541,7 +543,7 @@
 
             if(!isAudioMuted) {
                 sfxEngine.play();
-                bgm.volume = 0.3;
+                bgm.volume = 0.5;
                 bgm.play();
             }
             
